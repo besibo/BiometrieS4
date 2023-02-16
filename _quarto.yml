@@ -1,0 +1,23 @@
+project:
+  type: book
+
+book:
+  title: "BiometrieS4"
+  author: "Jane Doe"
+  date: "2/16/2023"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - summary.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+
+
