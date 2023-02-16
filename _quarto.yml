@@ -2,22 +2,53 @@ project:
   type: book
 
 book:
-  title: "BiometrieS4"
-  author: "Jane Doe"
-  date: "2/16/2023"
+  title: "TP de Biométrie<br> Semestre 4<br>"
+  author: "Benoît Simon-Bouhet"
+  date: now
+  date-format: "dddd D MMMM YYYY"
+  search: true
+  downloads: pdf
+  page-navigation: true
+  repo-url: "https://github.com/besibo/BiometrieS4"
   chapters:
     - index.qmd
-    - intro.qmd
-    - summary.qmd
+    - 01-dispersion.qmd
+    - 02-incertitude.qmd
+    - 03-graphiques.qmd
     - references.qmd
 
-bibliography: references.bib
+bibliography: all.bib
+lang: fr
+title-block-banner: true
+reference-location: margin
+
+language: 
+  title-block-author-single: "Auteur"
+  title-block-published: "Dernière Mise à jour"
 
 format:
   html:
-    theme: cosmo
+    theme: MyUnited.scss
+    highlight-style: solarized
+    # code-tools: 
+    #   source: false
+    #   toggle: true
+    # code-fold: show
+    code-block-bg: true
+    code-block-border-left: "#31BAE9"
+    code-depth: 5
+    smooth-scroll: true
+    link-external-icon: true
+    link-external-newwindow: true
   pdf:
     documentclass: scrreprt
+    papersize: a4
+    highlight-style: github
+    code-block-bg: false
+    code-block-border-left: "#31BAE9"
+    code-depth: 5
+    colorlinks: true
+
 
 
 
