@@ -41,15 +41,15 @@ system("cat book.bib packages.bib > all.bib")
 
 Ce livre contient l'ensemble du matériel (contenus, exemples, exercices...) nécessaire à la réalisation des travaux pratiques sous `R` pour la **Biométrie** de l'EC '*Outils pour l'étude et la compréhension du vivant 3*' du semestre 4 de la licence Sciences de la Vie de La Rochelle Université.
 
-À l'issue de ces 3 séances prévues ce semestre (2 TP et 1 TEA), vous devriez être capables de faire les choses suivantes dans le logiciel `RStudio` :
+À l'issue des 3 séances prévues ce semestre (2 TP et 1 TEA), vous devriez être capables de faire les choses suivantes dans le logiciel `RStudio` :
 
-- Explorer des jeux de données en produisant des résumés statistiques de variables de différentes natures (numériques continues ou catégorielles) et en produisant des graphiques appropriés
-- Être capables de distinguer les notions de dispersion et d'incertitude
-- Calculer des statistiques descriptives permettant de déterminer la position (moyennes, médianes, quartiles...) et la dispersion des données (écart-types, variances, intervalles inter-quartiles...) pour plusieurs sous-groupes de vos jeux de données, et les représenter sur des graphiques adaptés
-- Calculer des indices d'incertitude (erreurs standard, intervalles de confiance...) pour plusieurs sous-groupes de vos jeux de données, et les représenter sur des graphiques adaptés
+- Explorer des jeux de données en produisant des résumés statistiques de variables de différentes natures (numériques continues ou catégorielles) et en produisant des graphiques appropriés.
+- Être capables de distinguer les notions de dispersion et d'incertitude.
+- Calculer des statistiques descriptives permettant de déterminer la position (moyennes, médianes, quartiles...) et la dispersion des données (écart-types, variances, intervalles inter-quartiles...) pour plusieurs sous-groupes de vos jeux de données, et les représenter sur des graphiques adaptés.
+- Calculer des indices d'incertitude (erreurs standard, intervalles de confiance...) pour plusieurs sous-groupes de vos jeux de données, et les représenter sur des graphiques adaptés.
 
 
-## Pré-requis {-}
+## Pré-requis {#sec-prerequis}
 
 Pour atteindre les objectifs fixés ici, et compte tenu du volume horaire restreint qui est consacré aux TP et TEA de Biométrie au S4, vous devez obligatoirement posséder un certain nombre de pré-requis. En particulier, vous devriez avoir à ce stade une bonne connaissance de l'interface des logiciels `R` et `RStudio`, et vous devriez être capables :
 
@@ -61,7 +61,7 @@ Pour atteindre les objectifs fixés ici, et compte tenu du volume horaire restre
 :::{.callout-warning}
 ## Si ces pré-requis ne sont pas maîtrisés
 
-mettez-vous à niveau de toute urgence en lisant attentivement [le livre en ligne de Biométrie du semestre 3](https://besibo.github.io/BiometrieS3/) 
+Mettez-vous à niveau de toute urgence en lisant attentivement [le livre en ligne de Biométrie du semestre 3](https://besibo.github.io/BiometrieS3/) 
 :::
 
 
@@ -70,7 +70,7 @@ mettez-vous à niveau de toute urgence en lisant attentivement [le livre en lign
 
 ### Volume de travail {-}
 
-Les travaux pratiques et TEA de biométrie auront lieu entre le 17 octobre et le 02 décembre 2022 :
+Les travaux pratiques et TEA de biométrie auront lieu entre le 14 mars et le 13 avril 2023 :
 
 - Entre le mardi 14 et le mardi 28 mars : 1 séance de TP d'1h30 et 1 séance de TEA d'1h30
 - Entre le mardi 11 et le jeudi 13 avril : 1 séance de TP d'1h30
@@ -79,7 +79,7 @@ Les travaux pratiques et TEA de biométrie auront lieu entre le 17 octobre et le
 <!-- Il manque une séance de TP et de TEA par rapport à la maquette -->
 **Tous les TP ont lieu en salle MSI 217. Tous les TEA sont à distance.**
 
-Au total, chaque groupe aura donc 2 séances de TP et 1 séance de TEA, soit un total de 4,5 heures prévues dans vos emplois du temps. C'est peu pour atteindre les objectifs fixés et il y aura donc évidemment du travail personnel à fournir en dehors de ces séances. J'estime que vous devrez fournir 3 et 6 heures de travail personnel en plus des séances prévues dans votre emploi du temps. Attention donc : pensez bien à prévoir du temps dans vos plannings car le travail personnel est essentiel pour progresser dans cette matière. J'insiste sur l'importance de faire l'effort dès maintenant : vous allez en effet avoir des enseignements qui reposent sur l'utilisation de ces logiciels jusqu'à la fin du S6 (y compris pendant vos stage et, très vraisemblablement, dans vos futurs masters également). C'est donc maintenant qu'il faut acquérir des automatismes, cela vous fera gagner énormément de temps ensuite.
+Au total, chaque groupe aura donc 2 séances de TP et 1 séance de TEA, soit un total de 4,5 heures prévues dans vos emplois du temps. C'est peu pour atteindre les objectifs fixés et il y aura donc évidemment du travail personnel à fournir en dehors de ces séances. J'estime que vous devrez fournir 3 à 6 heures de travail personnel en plus des séances prévues dans votre emploi du temps. Attention donc : pensez bien à prévoir du temps dans vos plannings car le travail personnel est essentiel pour progresser dans cette matière. J'insiste sur l'importance de faire l'effort dès maintenant : vous allez en effet avoir des enseignements qui reposent sur l'utilisation de ces logiciels jusqu'à la fin du S6 (y compris pendant vos stages et, très vraisemblablement, dans vos futurs masters également). C'est donc maintenant qu'il faut acquérir des automatismes, cela vous fera gagner énormément de temps ensuite.
 
 
 ### Modalités d'enseignement {-}
@@ -92,7 +92,7 @@ L'essentiel du contenu de cet enseignement peut être abordé en autonomie, à d
 
 Plus que des séances de TP classiques, considérez plutôt qu'il s'agit de **permanences non-obligatoires** : si vous pensez avoir besoin d'aide, si vous avez des points de blocage ou des questions sur le contenu de ce document ou sur les exercices demandés, alors venez poser vos questions lors des séances de TP. Vous ne serez d'ailleurs pas tenus de rester pendant 1h30 : si vous obtenez une réponse en 10 minutes et que vous préférez travailler ailleurs, vous serez libres de repartir ! 
 
-De même, si vous n'avez pas de difficulté de compréhension, que vous n'avez pas de problème avec les exercices de ce livre en ligne, votre présence n'est pas requise : tant que le travail demandé est fait, libre à vous de choisir votre façon de travailler. Bien entendu, si vous souhaitez venir en salle de TP pour travailler au calme et dans un cadre plus formel, même si vous n'avez pas de questions à poser, pas de problème, vous y serez toujours les bienvenus et je suis présent systématiquement.
+De même, si vous n'avez pas de difficulté de compréhension, que vous n'avez pas de problème avec les exercices de ce livre en ligne, votre présence n'est pas requise : tant que le travail demandé est fait, libre à vous de choisir votre façon de travailler. Bien entendu, si vous souhaitez venir en salle de TP pour travailler au calme et dans un cadre plus formel, même si vous n'avez pas de questions à poser : aucun problème, vous y serez toujours les bienvenus et je serai présent systématiquement, pour toutes les séances et tous les groupes.
 
 Ce fonctionnement très souple a de nombreux avantages :
 
@@ -125,16 +125,16 @@ Je vous laisse donc une grande liberté d'organisation. À vous d'en tirer le ma
 
 Si vous avez suivi le document de prise en main de `R` et `RStudio` du semestre 3, vous savez que pour apprendre à utiliser ces logiciels, il faut faire les choses soi-même, ne pas avoir peur des messages d'erreurs (il faut d'ailleurs apprendre à les déchiffrer pour comprendre d'où viennent les problèmes), essayer maintes fois, se tromper beaucoup, recommencer, et surtout, ne pas se décourager. J'utilise ce logiciel presque quotidiennement depuis plus de 15 ans et à chaque session de travail, je rencontre des messages d'erreur. Avec suffisamment d'habitude, on apprend à les déchiffrer, et on corrige les problèmes en quelques secondes. Ce livre est conçu pour vous faciliter la tâche, mais ne vous y trompez pas, vous rencontrerez des difficultés, et c'est normal. C'est le prix à payer pour profiter de la puissance du meilleur logiciel permettant d'analyser des données, de produire des graphiques de qualité et de réaliser toutes les statistiques dont vous aurez besoin d'ici la fin de vos études et au-delà.
 
-Pour que cet apprentissage soit le moins problématique possible, il convient de prendre les choses dans l'ordre. C'est la raison pour laquelle les chapitres de ce livre doivent être lus dans l'ordre, et les exercices d'application faits au fur et à mesure de la lecture.
+Pour que cet apprentissage soit le moins problématique possible, il convient de prendre les choses dans l'ordre. C'est la raison pour laquelle les 3 chapitres de ce livre doivent être lus dans l'ordre, et les exercices d'application faits au fur et à mesure de la lecture.
 
 Idéalement, voilà les étapes que vous devriez avoir franchi chaque semaine :
 
-1. À l'issue de la première séance de TP et de la première séance de TEA, vous devriez avoir compris comment calculer et interpréter des résumés statistiques de vos jeux de données (c'est le premier chapitre de ce livre en ligne). Vous devriez en particulier être capable de calculer des estimateurs de position (moyennes, médianes, quartiles...) et de dispersion (variances, écart-types, intervalles inter-quartiles...) sur des variables numériques, et ce, pour plusieurs modalités d'une variable catégorielle ou pour chaque combinaison de modalités de plusieurs variables catégorielles (par exemple, quelles sont les moyennes et variances des longueurs de becs pour chaque espèce de manchots et chaque sexe). Vous devrez donc être capables d'utiliser les fonctions `group_by()` et `summarise()` du package `dplyr`. Cela suppose bien sûr que vous soyez au clair sur les pré-requis évoqués plus haut avant d'aborder le premier chapitre de ce livre en ligne.
+1. À l'issue de la première séance de TP et de la première séance de TEA, vous devriez avoir compris comment calculer et interpréter des résumés statistiques de vos jeux de données (c'est le premier chapitre de ce livre en ligne). Vous devriez en particulier être capable de calculer des estimateurs de position (moyennes, médianes, quartiles...) et de dispersion (variances, écart-types, intervalles inter-quartiles...) sur des variables numériques, et ce, pour plusieurs modalités d'une variable catégorielle ou pour chaque combinaison de modalités de plusieurs variables catégorielles (par exemple, quelles sont les moyennes et variances des longueurs de becs pour chaque espèce de manchots et chaque sexe). Vous devrez donc être capables d'utiliser les fonctions `group_by()` et `summarise()` du package `dplyr`. Cela suppose bien sûr que vous soyez au clair sur les pré-requis évoqués plus haut (@sec-prerequis) avant d'aborder le premier chapitre de ce livre en ligne.
 
 2. À l'issue de la seconde séance de TP, Vous devrez être capables de distinguer la notion de dispersion de celle de précision. Vous devrez être capable d'expliquer clairement la différence entre ces 2 notions, et vous devrez savoir à quoi servent les indices de dispersion et d'incertitude. Vous devrez être capables de calculer des indices d'incertitude, en particulier l'erreur standard de la moyenne (ou erreur type) et l'intervalle de confiance de la moyenne (chapitre 2). Vous devrez en outre être capables de produire des graphiques sur lesquels apparaissent des barres d'incertitude (erreurs standards ou intervalles de confiance, chapitre 3). Là encore, cela suppose que vous soyez au clair avec les représentations graphiques abordées au semestre 3 (comment produire un graphique avec `ggplot2`, quel graphique choisir pour quelles données et quel objectif ?...)
 
 
 ## Évaluation(s) {-}
 
-L'évaluation de la partie "Biométrie" de l'EC "Outils pour l'étude et la compréhension du vivant" sera conduite par mes collègues en charge des cours magistraux, travaux dirigés, et travaux pratiques "classiques" (Benoît Lebreton et Gérard Blanchard). Il est bien évident toutefois que mes collègues attendent une bonne maîtrise des notions développées ici, et qu'au-delà de la biométrie, les autres collègues intervenant dans l'EC "outils pour l'étude et la compréhension du vivant 3" attendent eux aussi que vous mettiez en pratique ce que vous apprenez ici dans vos futurs compte-rendus de TP.
+L'évaluation de la partie "Biométrie" de l'EC "Outils pour l'étude et la compréhension du vivant 3" sera conduite par mes collègues en charge des cours magistraux, travaux dirigés, et travaux pratiques "classiques" (Benoît Lebreton et Gérard Blanchard). Il est bien évident toutefois que mes collègues attendent une bonne maîtrise des notions développées ici, et qu'au-delà de la biométrie, les autres collègues intervenant dans l'EC "outils pour l'étude et la compréhension du vivant 3" attendent eux aussi que vous mettiez en pratique ce que vous apprenez ici dans vos futurs compte-rendus de TP.
 
