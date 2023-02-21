@@ -47,7 +47,7 @@ Concrètement, plus l'intervalle de confiance est large, moins notre confiance e
 La notion d'intervalle de confiance à 95% est donc très proche de celle d'erreur standard. D'ailleurs, pour la plupart des grandeurs d'un échantillon, l'intervalle de confiance est très souvent calculé à partir de l'erreur standard.
 
 
-## Calcul de l'erreur standard de la moyenne
+## Calcul de l'erreur standard de la moyenne {#sec-errstd}
 
 Contrairement aux indices de position et de dispersion, il n'existe pas de fonction intégrée à `R` qui permette de calculer l'erreur standard de la moyenne. Toutefois, sa formule très simple nous permet de la calculer à la main quand on en a besoin grâce aux fonction `group_by()` et `summarise()`.
 
@@ -154,7 +154,7 @@ Les résultats obtenus ne sont pas exactement au même format :
 Il ne nous restera plus qu'à ajouter des barres d'erreur sur notre graphique pour visualiser l'incertitude associée à chaque valeur de moyenne.
 
 
-## Calculs d'intervalles de confiance à 95%
+## Calculs d'intervalles de confiance à 95% {#sec-confint}
 
 Comme pour les erreurs standard, il est possible de calculer des intervalles de confiance de n'importe quel estimateur calculé à partir d'un échantillon, pour déterminer la gamme des valeurs les plus probables pour les paramètres équivalents dans la population générale. Nous nous concentrerons ici sur le calcul des intervalles de confiance à 95% de la moyenne, mais nous serons amenés à examiner également l'intervalle de confiance de la médiane, puis, dans la @sec-moy2, l'intervalle de confiance à 95% d'une différence de moyennes.
 
