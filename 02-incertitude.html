@@ -208,8 +208,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#la-notion-de-dispersion" id="toc-la-notion-de-dispersion" class="nav-link active" data-scroll-target="#la-notion-de-dispersion"> <span class="header-section-number">2.1</span> La notion de dispersion</a></li>
   <li><a href="#la-notion-dincertitude" id="toc-la-notion-dincertitude" class="nav-link" data-scroll-target="#la-notion-dincertitude"> <span class="header-section-number">2.2</span> La notion d’incertitude</a></li>
-  <li><a href="#calcul-de-lerreur-standard-de-la-moyenne" id="toc-calcul-de-lerreur-standard-de-la-moyenne" class="nav-link" data-scroll-target="#calcul-de-lerreur-standard-de-la-moyenne"> <span class="header-section-number">2.3</span> Calcul de l’erreur standard de la moyenne</a></li>
-  <li><a href="#calculs-dintervalles-de-confiance-à-95" id="toc-calculs-dintervalles-de-confiance-à-95" class="nav-link" data-scroll-target="#calculs-dintervalles-de-confiance-à-95"> <span class="header-section-number">2.4</span> Calculs d’intervalles de confiance à 95%</a></li>
+  <li><a href="#sec-errstd" id="toc-sec-errstd" class="nav-link" data-scroll-target="#sec-errstd"> <span class="header-section-number">2.3</span> Calcul de l’erreur standard de la moyenne</a></li>
+  <li><a href="#sec-confint" id="toc-sec-confint" class="nav-link" data-scroll-target="#sec-confint"> <span class="header-section-number">2.4</span> Calculs d’intervalles de confiance à 95%</a></li>
   </ul>
 </nav>
     </div>
@@ -248,8 +248,8 @@ Autrement dit…
 <p>Concrètement, plus l’intervalle de confiance est large, moins notre confiance est grande. Si, pour une moyenne d’échantillon de 10, l’intervalle de confiance à 95% vaut [9,5 ; 11], la gamme des valeurs probables pour la moyenne est étroite. Autrement dit, la moyenne de l’échantillon, qui vaut 10, a de bonne chances d’être très proche de la vraie valeur de moyenne de la population générale.</p>
 <p>La notion d’intervalle de confiance à 95% est donc très proche de celle d’erreur standard. D’ailleurs, pour la plupart des grandeurs d’un échantillon, l’intervalle de confiance est très souvent calculé à partir de l’erreur standard.</p>
 </section>
-<section id="calcul-de-lerreur-standard-de-la-moyenne" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="calcul-de-lerreur-standard-de-la-moyenne"><span class="header-section-number">2.3</span> Calcul de l’erreur standard de la moyenne</h2>
+<section id="sec-errstd" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="sec-errstd"><span class="header-section-number">2.3</span> Calcul de l’erreur standard de la moyenne</h2>
 <p>Contrairement aux indices de position et de dispersion, il n’existe pas de fonction intégrée à <code>R</code> qui permette de calculer l’erreur standard de la moyenne. Toutefois, sa formule très simple nous permet de la calculer à la main quand on en a besoin grâce aux fonction <code>group_by()</code> et <code>summarise()</code>.</p>
 <p>Par exemple, reprenons les données de température (tableau <code>weather</code>, colonne <code>temp</code>) dans les 3 aéroports de New York (colonne <code>origin</code>). Imaginons que nous souhaitions étudier les fluctuations de températures au fil des mois de l’année 2013 :</p>
 <ol type="1">
@@ -462,8 +462,8 @@ the `.groups` argument.
 </ul>
 <p>Il ne nous restera plus qu’à ajouter des barres d’erreur sur notre graphique pour visualiser l’incertitude associée à chaque valeur de moyenne.</p>
 </section>
-<section id="calculs-dintervalles-de-confiance-à-95" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="calculs-dintervalles-de-confiance-à-95"><span class="header-section-number">2.4</span> Calculs d’intervalles de confiance à 95%</h2>
+<section id="sec-confint" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="sec-confint"><span class="header-section-number">2.4</span> Calculs d’intervalles de confiance à 95%</h2>
 <p>Comme pour les erreurs standard, il est possible de calculer des intervalles de confiance de n’importe quel estimateur calculé à partir d’un échantillon, pour déterminer la gamme des valeurs les plus probables pour les paramètres équivalents dans la population générale. Nous nous concentrerons ici sur le calcul des intervalles de confiance à 95% de la moyenne, mais nous serons amenés à examiner également l’intervalle de confiance de la médiane, puis, dans la <span class="quarto-unresolved-ref">?sec-moy2</span>, l’intervalle de confiance à 95% d’une différence de moyennes.</p>
 <p>Contrairement à l’erreur standard, il n’y a pas qu’une bonne façon de calculer l’intervalle de confiance à 95% d’une moyenne. Plusieurs formules existent et le choix de la formule dépend en partie de la distribution des données (la distribution suit-elle une loi Normale ou non) et de la taille de l’échantillon dont nous disposons (<span class="math inline">\(n\)</span> est-il supérieur à 30 ou non ?). Dans la situation idéale d’une variable qui suit la distribution Normale, les bornes inférieures et supérieures de l’intervalle de confiance à 95% sont obtenues grâce à cette formule</p>
 <p><span class="math display">\[\bar{x} - 1.96 \cdot \frac{s}{\sqrt{n}} &lt; \mu &lt; \bar{x} + 1.96 \cdot \frac{s}{\sqrt{n}}\]</span></p>
