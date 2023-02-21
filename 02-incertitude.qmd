@@ -5,26 +5,32 @@ editor_options:
 ---
 # Dispersion et incertitude {#sec-disp}
 
-```{r}
-#| include: false
+## Pré-requis
 
+Nous aurons ici besoin des packages suivants :
+
+```{r}
+#| message: false
+#| warning: false
 
 library(tidyverse)
-library(skimr)
 library(palmerpenguins)
 library(nycflights13)
 ```
 
+Pensez à les charger en mémoire si ce n'est pas déjà fait ou si vous venez de démarrer une nouvelle session de travail.
+
 
 ## La notion de dispersion
 
-Comme expliqué plus haut, les **indices de dispersion** nous renseignent sur la variabilités des données autour de la valeur moyenne (ou médiane) d'une population ou d'un échantillon. L'écart-type, la variance et l'intervalle inter-quartiles sont 3 exemples d'indices de dispersion. Prenons l'exemple de l'écart-type. Un écart-type faible indique que la majorité des observations ont des valeurs proches de la moyenne. À l'inverse, un écart-type important indique que la plupart des points sont éloignés de la moyenne. L'écart-type est une caractéristique de la population que l'on étudie grâce à un échantillon, au même titre que la moyenne. En travaillant sur un échantillon, j'espère accéder aux vraies grandeurs de la population. Même si ces vraies grandeurs sont à jamais inaccessibles (on ne connaîtra jamais parfaitement quelle est la vraie valeur de moyenne $\mu$ ou d'écart-type $\sigma$ de la population), on espère qu'avec un échantillonnage réalisé correctement, la moyenne de l'échantillon ($\bar{x}$ ou $m$) et l'écart-type ($s$) de l'échantillon reflètent assez fidèlement les valeurs de la population générale. C'est la notion d'estimateur, intimement liée à la notion d'**inférence statistique** : la moyenne de l'échantillon est un estimateur de la moyenne $\mu$ de la population. C'est la raison pour laquelle on la note parfois $\hat{\mu}$ (en plus de $\bar{x}$ ou $m$). De même, l'écart-type $s$ et la variance $s^2$ d'un échantillon sont des estimateurs de l'écart-type $\sigma$ et de la variance $\sigma^2$ de la population générale. C'est la raison pour laquelle on les note parfois $\hat{\sigma}$ et $\hat{\sigma}^2$ respectivement. L'accent circonflexe se prononce "chapeau". On dit donc que $\hat{\sigma}$ (sigma chapeau) est un estimateur de l´écart-type de la population générale. Comme nous l'avons vu, les indices de dispersion doivent accompagner les indices de position lorsque l'on décrit des données, car présenter une valeur de moyenne, ou de médiane seule n'a pas de sens : il faut savoir à quel point les données sont proches ou éloignées de la tendance centrale pour savoir si, dans la population générale, les indicateurs de position correspondent ou non, aux valeurs portées par la majorité des individus. 
+Comme expliqué plus haut, les **indices de dispersion** nous renseignent sur la variabilités des données autour de la valeur centrale (moyenne ou médiane) d'une population ou d'un échantillon. L'écart-type, la variance et l'intervalle interquartile sont 3 exemples d'indices de dispersion. Prenons l'exemple de l'écart-type. Un écart-type faible indique que la majorité des observations ont des valeurs proches de la moyenne. À l'inverse, un écart-type important indique que la plupart des points sont éloignés de la moyenne. L'écart-type est une caractéristique de la population que l'on étudie grâce à un échantillon, au même titre que la moyenne. En travaillant sur un échantillon, on espère accéder aux vraies grandeurs de la population. Même si ces vraies grandeurs sont à jamais inaccessibles (on ne connaîtra jamais parfaitement quelle est la vraie valeur de moyenne $\mu$ ou d'écart-type $\sigma$ de la population), on espère qu'avec un échantillonnage réalisé correctement, la moyenne de l'échantillon ($\bar{x}$ ou $m$) et l'écart-type ($s$) de l'échantillon reflètent assez fidèlement les valeurs de la population générale. C'est la notion d'estimateur, intimement liée à la notion d'**inférence statistique** : la moyenne de l'échantillon, que l'on connait avec précision, est un estimateur de la moyenne $\mu$ de la population qui restera à jamais inconnue. C'est la raison pour laquelle la moyenne de l'échantillon est parfois notée $\hat{\mu}$ (en plus de $\bar{x}$ ou $m$). De même, l'écart-type $s$ et la variance $s^2$ d'un échantillon sont des estimateurs de l'écart-type $\sigma$ et de la variance $\sigma^2$ de la population générale. C'est la raison pour laquelle on les note parfois $\hat{\sigma}$ et $\hat{\sigma}^2$ respectivement. L'accent circonflexe se prononce "chapeau". On dit donc que $\hat{\sigma}$ (sigma chapeau, l'écart-type de l'échantillon) est un estimateur de l´écart-type de la population générale. Comme nous l'avons vu, les indices de dispersion doivent accompagner les indices de position lorsque l'on décrit des données, car présenter une valeur de moyenne, ou de médiane seule n'a pas de sens : il faut savoir à quel point les données sont proches ou éloignées de la tendance centrale pour savoir si, dans la population générale, les indicateurs de position correspondent ou non, aux valeurs portées par la majorité des individus. 
 
 Nous avons vu plus haut comment calculer des indices de position et de dispersion. Tout ceci devrait donc être clair pour vous à ce stade.
 
 ## La notion d'incertitude
 
-Par ailleurs, puisqu'on ne sait jamais avec certitude si nos estimations (de moyennes ou d'écarts-types ou de tout autre paramètre) reflètent fidèlement ou non les vraies valeurs de la population, nous devons quantifier à quel point nos estimations s'écartent de celles de la population générale. C'est ce que permettent les **indices d'incertitude**. Les deux indices d'incertitude les plus connus (et les plus utilisés) sont l'intervalle de confiance à 95% (de la moyenne ou de tout autre estimateur ; les formules sont nombreuses et il n'est pas utile de les détailler ici : nous verrons comment les calculer plus bas) et l'erreur standard de la moyenne ($se_{\bar{x}}$), dont la formule est la suivante :
+Par ailleurs, puisqu'on ne sait jamais avec certitude si nos estimations (de moyennes ou d'écarts-types ou de tout autre paramètre) reflètent fidèlement ou non les vraies valeurs de la population, nous devons quantifier à quel point nos estimations s'écartent de celles de la population générale. C'est tout l'intérêt des statistiques et c'est ce que permettent les **indices d'incertitude** : on ne connaîtra jamais la vraie valeur de moyenne ou d'écart-type de la population, mais on peut quantifier à quel point nos estimations (basées sur un échantillon) sont précises ou imprécises.  
+Les deux indices d'incertitude les plus connus (et les plus utilisés) sont l'**intervalle de confiance à 95%** (de la moyenne ou de tout autre estimateur ; les formules sont nombreuses et il n'est pas utile de les détailler ici : nous verrons comment les calculer plus bas) et l'**erreur standard** de la moyenne ($se_{\bar{x}}$), dont la formule est la suivante :
 
 $$se_{\bar{x}} = \frac{s}{\sqrt{n}}$$
 avec $s$, l'écart-type de l'échantillon et $n$ la taille de l'échantillon. 
@@ -42,16 +48,16 @@ En examinant la formule de l'erreur standard de la moyenne présentée ci-dessus
 
 L'autre indice d'incertitude très fréquemment utilisé est l'intervalle de confiance à 95% (de la moyenne, de la médiane, de la variance, ou de toute autre estimateur calculé dans un échantillon). L'intervalle de confiance nous renseigne sur la gamme des valeurs les plus probables pour un paramètre de la population étudiée. Par exemple, si j'observe, dans un échantillon, une moyenne de 10, avec un intervalle de confiance calculé de [7 ; 15], cela signifie que, dans la population générale, la vraie valeur de moyenne a de bonnes chances de se trouver dans l'intervalle [7 ; 15]. Dans la population générale, toutes les valeurs comprises entre 7 et 15 sont vraisemblables pour la moyenne alors que les valeurs situées en dehors de cet intervalle sont moins probables. Une autre façon de comprendre l'intervalle de confiance est de dire que si je récupère un grand nombre d'échantillons dans la même population, en utilisant exactement le même protocole expérimental, 95% des échantillons que je vais récupérer auront une moyenne située à l'intérieur de l'intervalle de confiance à 95%, et 5% des échantillons auront une moyenne située à l'extérieur de l'intervalle de confiance à 95%. C'est une notion qui n'est pas si évidente que ça à comprendre, donc prenez bien le temps de relire cette section si besoin, et de poser des questions le cas échéant.
 
-Concrètement, plus l'intervalle de confiance est large, moins notre confiance est grande. Si, pour une moyenne d'échantillon de 10, l'intervalle de confiance à 95% vaut [9,5 ; 11], la gamme des valeurs probables pour la moyenne est étroite. Autrement dit, la moyenne de l'échantillon, qui vaut 10, a de bonne chances d'être très proche de la vraie valeur de moyenne de la population générale.
+Concrètement, plus l'intervalle de confiance est large, moins notre confiance est grande. Si la moyenne d'un échantillon vaut $\bar{x} = 10$, et que son intervalle de confiance à 95% vaut [9,5 ; 11], la gamme des valeurs probables pour la moyenne de la population est étroite. Autrement dit, la moyenne de l'échantillon (10), a de bonne chances d'être très proche de la vraie valeur de moyenne de la population générale (vraisemblablement comprise quelque part entre 9,5 et 11). À l'inverse, si l'intervalle de confiance à 95% de la moyenne vaut [4 ; 17], la gamme des valeurs possibles pour la vraie moyenne de la population est grande. La moyenne de l'échantillon aura donc de grandes chances d'être assez éloignée de la vraie valeur de la population.
 
-La notion d'intervalle de confiance à 95% est donc très proche de celle d'erreur standard. D'ailleurs, pour la plupart des grandeurs d'un échantillon, l'intervalle de confiance est très souvent calculé à partir de l'erreur standard.
+La notion d'intervalle de confiance à 95% est donc très proche de celle d'erreur standard. D'ailleurs, pour de nombreux paramètres, l'intervalle de confiance est calculé à partir de l'erreur standard.
 
 
 ## Calcul de l'erreur standard de la moyenne {#sec-errstd}
 
-Contrairement aux indices de position et de dispersion, il n'existe pas de fonction intégrée à `R` qui permette de calculer l'erreur standard de la moyenne. Toutefois, sa formule très simple nous permet de la calculer à la main quand on en a besoin grâce aux fonction `group_by()` et `summarise()`.
+Contrairement aux indices de position et de dispersion, il n'existe pas de fonction intégrée à `R` qui permette de calculer l'erreur standard de la moyenne. Toutefois, sa formule très simple nous permet de la calculer à la main quand on en a besoin grâce à la fonction `summarise()`.
 
-Par exemple, reprenons les données de température (tableau `weather`, colonne `temp`) dans les 3 aéroports de New York (colonne `origin`). Imaginons que nous souhaitions étudier les fluctuations de températures au fil des mois de l'année 2013 :
+Par exemple, reprenons les données de température (tableau `weather` du package `nycflights13`, colonne `temp`) dans les 3 aéroports de New York (colonne `origin`). Imaginons que nous souhaitions étudier les fluctuations de températures au fil des mois de l'année 2013 :
 
 1. Je vais commencer par transformer les températures (fournies en degrés Fahrenheit) en degrés Celsius :
 
@@ -60,33 +66,31 @@ weather %>%
   mutate(temp_celsius = (temp - 32) / 1.8)
 ```
 
-2. Ensuite, je détermine, pour chaque jour de chaque mois de l'année, et pour chaque aéroport, quelle est la température maximale atteinte :
+2. Ensuite, je détermine, pour chaque jour de chaque mois de l'année, et pour chaque aéroport, quelle est la température maximale atteinte, et je stocke ces valeurs dans un nouvel objet pour pouvoir le ré-utiliser :
 
 ```{r}
-weather %>% 
+temp_jour <- weather %>% 
   mutate(temp_celsius = (temp - 32) / 1.8) %>% 
-  group_by(origin, month, day) %>% 
-  summarise(temperature_max = max(temp_celsius, na.rm = TRUE))
+  summarise(temperature_max = max(temp_celsius, na.rm = TRUE),
+            .by = c(origin, month, day))
+
+temp_jour
 ```
 
 3. Je peux maintenant calculer la température moyenne mensuelle pour chaque aéroport :
 
 ```{r}
-weather %>% 
-  mutate(temp_celsius = (temp - 32) / 1.8) %>% 
-  group_by(origin, month, day) %>% 
-  summarise(temperature_max = max(temp_celsius, na.rm = TRUE)) %>% 
-  summarise(moyenne = mean(temperature_max, na.rm = TRUE))
+temp_jour %>% 
+  summarise(moyenne = mean(temperature_max, na.rm = TRUE),
+            .by = c(origin, month))
 ```
 
 Pour pouvoir réutiliser ce tableau, je lui donne un nom : 
 
 ```{r}
-temperatures <- weather %>% 
-  mutate(temp_celsius = (temp - 32) / 1.8) %>% 
-  group_by(origin, month, day) %>% 
-  summarise(temperature_max = max(temp_celsius, na.rm = TRUE)) %>% 
-  summarise(moyenne = mean(temperature_max, na.rm = TRUE))
+temp_moyennes <- temp_jour %>% 
+  summarise(moyenne = mean(temperature_max, na.rm = TRUE),
+            .by = c(origin, month))
 ```
 
 Au final, je peux faire un graphique de l'évolution de ces températures :
@@ -94,7 +98,7 @@ Au final, je peux faire un graphique de l'évolution de ces températures :
 ```{r}
 #| fig-asp: 1
 
-temperatures %>% 
+temp_moyennes %>% 
   ggplot(aes(x = factor(month), y = moyenne)) +
   geom_line(aes(group = 1)) +
   geom_point() +
@@ -112,13 +116,11 @@ Vous remarquerez que :
 Pour les 3 aéroports, les profils de températures sont très proches. C'est tout à fait logique puisqu'ils sont situés dans un rayon de quelques kilomètres seulement. Le problème de ce graphique est que chaque point a été obtenu en calculant une moyenne. En janvier, nous avons fait la moyenne de 31 valeurs de températures quotidiennes pour chaque aéroport. En février, nous avons fait la moyenne de 28 valeurs de températures quotidiennes pour chaque aéroport. Et ainsi de suite pour tous les mois de l'année 2013. Puisque nous présentons des valeurs de moyennes, il nous faut présenter également **l'incertitude associée à ces calculs de moyennes**. Pour cela, nous devons calculer l'erreur standard des moyennes :
 
 ```{r}
-weather %>% 
-  mutate(temp_celsius = (temp - 32) / 1.8) %>% 
-  group_by(origin, month, day) %>% 
-  summarise(temperature_max = max(temp_celsius, na.rm = TRUE)) %>% 
+temp_jour %>% 
   summarise(moyenne = mean(temperature_max, na.rm = TRUE),
             N_obs = n(),
-            erreur_standard = sd(temperature_max, na.rm = TRUE) / sqrt(N_obs))
+            erreur_standard = sd(temperature_max, na.rm = TRUE) / sqrt(N_obs),
+            .by = c(origin, month))
 ```
 
 Notre tableau de statistiques descriptives possède maintenant 2 colonnes supplémentaires : le nombre d'observations (que j'ai nommé `N_obs`), et l'erreur standard associée à chaque moyenne, calculée grâce à la formule vue plus haut $se_{\bar{x}} = \frac{s}{\sqrt{n}}$ (la fonction `sqrt()` permet de calculer la racine carrée). On constate que l'erreur standard, qui s'exprime dans la même unité que la moyenne, est variable selon les mois de l'année. Ainsi, pour l'aéroport de Newark, l'incertitude semble particulièrement faible pour le mois d'août (0.385 ºC) mais presque 3 fois plus forte pour le mois de janvier (1.14 ºC).
@@ -126,37 +128,33 @@ Notre tableau de statistiques descriptives possède maintenant 2 colonnes suppl�
 Une fois de plus, je donne un nom à ce tableau de données pour pouvoir le réutiliser plus tard :
 
 ```{r}
-temperatures_se <- weather %>% 
-  mutate(temp_celsius = (temp - 32) / 1.8) %>% 
-  group_by(origin, month, day) %>% 
-  summarise(temperature_max = max(temp_celsius, na.rm = TRUE)) %>% 
+temperatures_se <- temp_jour %>% 
   summarise(moyenne = mean(temperature_max, na.rm = TRUE),
             N_obs = n(),
-            erreur_standard = sd(temperature_max, na.rm = TRUE) / sqrt(N_obs))
+            erreur_standard = sd(temperature_max, na.rm = TRUE) / sqrt(N_obs),
+            .by = c(origin, month))
 ```
 
-Notez que le package `ggplot2` contient une fonction permettant de calculer à la fois la moyenne et erreur standard de la moyenne d'un échantillon :
+Notez que le package `ggplot2` contient une fonction permettant de calculer à la fois la moyenne et erreur standard de la moyenne d'un échantillon : `mean_se()`. Puisque cette fonction renvoie 3 valeurs ($\bar{x}$, $\bar{x} - se$ et $\bar{x} + se$), on utilise `reframe()` :
 
 ```{r}
-weather %>% 
-  mutate(temp_celsius = (temp - 32) / 1.8) %>% 
-  group_by(origin, month, day) %>% 
-  summarise(temperature_max = max(temp_celsius, na.rm = TRUE)) %>% 
-  summarise(mean_se(temperature_max))
+temp_jour %>% 
+  reframe(mean_se(temperature_max), 
+          .by = c(origin, month))
 ```
 
 Les résultats obtenus ne sont pas exactement au même format :
 
-- la colonne `y` contient les valeurs de moyennes
-- la colonne `ymin` contient la valeur de moyenne moins une fois l'erreur standard
-- la colonne `ymax` contient la valeur de moyenne plus une fois l'erreur standard
+- la colonne `y` contient les valeurs de moyennes ($\bar{x}$)
+- la colonne `ymin` contient la valeur de moyenne moins une fois l'erreur standard ($\bar{x} - se$)
+- la colonne `ymax` contient la valeur de moyenne plus une fois l'erreur standard ($\bar{x} + se$)
 
 Il ne nous restera plus qu'à ajouter des barres d'erreur sur notre graphique pour visualiser l'incertitude associée à chaque valeur de moyenne.
 
 
 ## Calculs d'intervalles de confiance à 95% {#sec-confint}
 
-Comme pour les erreurs standard, il est possible de calculer des intervalles de confiance de n'importe quel estimateur calculé à partir d'un échantillon, pour déterminer la gamme des valeurs les plus probables pour les paramètres équivalents dans la population générale. Nous nous concentrerons ici sur le calcul des intervalles de confiance à 95% de la moyenne, mais nous serons amenés à examiner également l'intervalle de confiance de la médiane, puis, dans la @sec-moy2, l'intervalle de confiance à 95% d'une différence de moyennes.
+Comme pour les erreurs standard, il est possible de calculer des intervalles de confiance de n'importe quel estimateur calculé à partir d'un échantillon, pour déterminer la gamme des valeurs les plus probables pour les paramètres équivalents dans la population générale. Nous nous concentrerons ici sur le calcul des intervalles de confiance à 95% de la moyenne, mais nous serons amenés à examiner également l'intervalle de confiance de la médiane, puis, au cours de votre L3, l'intervalle de confiance à 95% d'une différence de moyennes.
 
 Contrairement à l'erreur standard, il n'y a pas qu'une bonne façon de calculer l'intervalle de confiance à 95% d'une moyenne. Plusieurs formules existent et le choix de la formule dépend en partie de la distribution des données (la distribution suit-elle une loi Normale ou non) et de la taille de l'échantillon dont nous disposons ($n$ est-il supérieur à 30 ou non ?). Dans la situation idéale d'une variable qui suit la distribution Normale, les bornes inférieures et supérieures de l'intervalle de confiance à 95% sont obtenues grâce à cette formule 
 
@@ -164,11 +162,9 @@ $$\bar{x} - 1.96 \cdot \frac{s}{\sqrt{n}} < \mu < \bar{x} + 1.96 \cdot \frac{s}{
 Autrement dit, la vraie moyenne $\mu$ d'une population a de bonnes chances de se trouver dans un intervalle de plus ou moins 1.96 fois l'erreur standard de la moyenne. En première approximation, l'intervalle de confiance est donc la moyenne de l'échantillon $\bar{x}$ plus ou moins 2 fois l'erreur standard (que nous avons appris à calculer à la main un peu plus tôt). On peut donc calculer à la main les bornes inférieures et supérieures de l'intervalle de confiance ainsi :
 
 ```{r}
-weather %>% 
-  mutate(temp_celsius = (temp - 32) / 1.8) %>% 
-  group_by(origin, month, day) %>% 
-  summarise(temperature_max = max(temp_celsius, na.rm = TRUE)) %>% 
-  summarise(mean_se(temperature_max, mult = 1.96))
+temp_jour %>% 
+  reframe(mean_se(temperature_max, mult = 1.96),
+          .by = c(origin, month))
 ```
 
 Ici, grâce à l'argument `mult = 1.96` de la fonction `mean_se()` :
@@ -179,11 +175,9 @@ Ici, grâce à l'argument `mult = 1.96` de la fonction `mean_se()` :
 Dans la pratique, puisque cette méthode reste approximative et dépend de la nature des données dont on dispose, on utilisera plutôt des fonctions spécifiques qui calculeront pour nous les intervalles de confiance à 95% de nos estimateurs. C'est ce que permet en particulier la fonction `mean_cl_normal()` du package `ggplot2`. Il est toutefois important de bien comprendre qu'il y a un lien étroit entre l'erreur standard (l'incertitude associées à l'estimation d'un paramètre d'une population à partir des données d'un échantillon), et l'intervalle de confiance à 95% de ce paramètre.
 
 ```{r}
-weather %>% 
-  mutate(temp_celsius = (temp - 32) / 1.8) %>% 
-  group_by(origin, month, day) %>% 
-  summarise(temperature_max = max(temp_celsius, na.rm = TRUE)) %>% 
-  summarise(mean_cl_normal(temperature_max))
+temp_jour %>% 
+  reframe(mean_cl_normal(temperature_max),
+            .by = c(origin, month))
 ```
 
 Comme dans les tableaux précédents, 3 nouvelles colonnes ont été crées :
@@ -203,11 +197,9 @@ temperatures_se
 Ensuite, nous avons produit un tableau presque équivalent que nous allons nommer `temperature_se_bornes` et pour lequel nous allons modifier le nom des colonnes `y`, `ymin` et `ymax` :
 
 ```{r}
-temperature_se_bornes <- weather %>% 
-  mutate(temp_celsius = (temp - 32) / 1.8) %>% 
-  group_by(origin, month, day) %>% 
-  summarise(temperature_max = max(temp_celsius, na.rm = TRUE)) %>% 
-  summarise(mean_se(temperature_max)) %>% 
+temperature_se_bornes <- temp_jour %>% 
+  reframe(mean_se(temperature_max),
+            .by = c(origin, month)) %>% 
   rename(moyenne = y,
          moyenne_moins_se = ymin,
          moyenne_plus_se = ymax)
@@ -218,11 +210,9 @@ temperature_se_bornes
 Nous avons ensuite calculé manuellement des intervalles de confiance approximatifs, avec la fonction `mean_se()` et son argument `mult = 1.96`. Là encore, nous allons stocker cet objet dans un tableau nommé `temperatures_ci_approx`, et nous allons modifier le nom des colonnes `y`, `ymin`, et `ymax` :
 
 ```{r}
-temperature_ci_approx <- weather %>% 
-  mutate(temp_celsius = (temp - 32) / 1.8) %>% 
-  group_by(origin, month, day) %>% 
-  summarise(temperature_max = max(temp_celsius, na.rm = TRUE)) %>% 
-  summarise(mean_se(temperature_max, mult = 1.96)) %>% 
+temperature_ci_approx <- temp_jour %>% 
+  reframe(mean_se(temperature_max, mult = 1.96),
+          .by = c(origin, month)) %>% 
   rename(moyenne = y,
          ci_borne_inf = ymin,
          ci_borne_sup = ymax)
@@ -230,15 +220,12 @@ temperature_ci_approx <- weather %>%
 temperature_ci_approx
 ```
 
-
 Enfin, nous avons calculé les intervalles de confiance avec une fonction spécialement dédiée à cette tâche : la fonction `mean_cl_normal()`. Nous allons stocker cet objet dans un tableau nommé `temperatures_ci`, et nous allons modifier le nom des colonnes `y`, `ymin`, et `ymax` :
 
 ```{r}
-temperature_ci <- weather %>% 
-  mutate(temp_celsius = (temp - 32) / 1.8) %>% 
-  group_by(origin, month, day) %>% 
-  summarise(temperature_max = max(temp_celsius, na.rm = TRUE)) %>% 
-  summarise(mean_cl_normal(temperature_max)) %>% 
+temperature_ci <- temp_jour %>% 
+  reframe(mean_cl_normal(temperature_max),
+          .by = c(origin, month)) %>% 
   rename(moyenne = y,
          ci_borne_inf = ymin,
          ci_borne_sup = ymax)

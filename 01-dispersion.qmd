@@ -505,7 +505,7 @@ penguins %>%
 
 À ce stade, vous devriez être capables de créer (et d'interpréter !) ce type de graphiques. Si ce n'est pas le cas, consultez d'urgence [le chapitre 3 du livre en ligne de Biométrie du semestre 3](https://besibo.github.io/BiometrieS3/03-visualization.html).
 
-:::{.callout-note}
+:::{.callout-tip}
 ## À retenir
 
 - la fonction `summarise()` s'utilise avec des fonctions statistiques qui ne renvoient qu'une valeur (par exemple `mean()`, `median()`, `sd()`, `var()`...)
