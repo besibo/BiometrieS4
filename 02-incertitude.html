@@ -206,10 +206,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table des matières</h2>
    
   <ul>
-  <li><a href="#la-notion-de-dispersion" id="toc-la-notion-de-dispersion" class="nav-link active" data-scroll-target="#la-notion-de-dispersion"> <span class="header-section-number">2.1</span> La notion de dispersion</a></li>
-  <li><a href="#la-notion-dincertitude" id="toc-la-notion-dincertitude" class="nav-link" data-scroll-target="#la-notion-dincertitude"> <span class="header-section-number">2.2</span> La notion d’incertitude</a></li>
-  <li><a href="#sec-errstd" id="toc-sec-errstd" class="nav-link" data-scroll-target="#sec-errstd"> <span class="header-section-number">2.3</span> Calcul de l’erreur standard de la moyenne</a></li>
-  <li><a href="#sec-confint" id="toc-sec-confint" class="nav-link" data-scroll-target="#sec-confint"> <span class="header-section-number">2.4</span> Calculs d’intervalles de confiance à 95%</a></li>
+  <li><a href="#pré-requis" id="toc-pré-requis" class="nav-link active" data-scroll-target="#pré-requis"> <span class="header-section-number">2.1</span> Pré-requis</a></li>
+  <li><a href="#la-notion-de-dispersion" id="toc-la-notion-de-dispersion" class="nav-link" data-scroll-target="#la-notion-de-dispersion"> <span class="header-section-number">2.2</span> La notion de dispersion</a></li>
+  <li><a href="#la-notion-dincertitude" id="toc-la-notion-dincertitude" class="nav-link" data-scroll-target="#la-notion-dincertitude"> <span class="header-section-number">2.3</span> La notion d’incertitude</a></li>
+  <li><a href="#sec-errstd" id="toc-sec-errstd" class="nav-link" data-scroll-target="#sec-errstd"> <span class="header-section-number">2.4</span> Calcul de l’erreur standard de la moyenne</a></li>
+  <li><a href="#sec-confint" id="toc-sec-confint" class="nav-link" data-scroll-target="#sec-confint"> <span class="header-section-number">2.5</span> Calculs d’intervalles de confiance à 95%</a></li>
   </ul>
 </nav>
     </div>
@@ -219,14 +220,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<section id="la-notion-de-dispersion" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="la-notion-de-dispersion"><span class="header-section-number">2.1</span> La notion de dispersion</h2>
-<p>Comme expliqué plus haut, les <strong>indices de dispersion</strong> nous renseignent sur la variabilités des données autour de la valeur moyenne (ou médiane) d’une population ou d’un échantillon. L’écart-type, la variance et l’intervalle inter-quartiles sont 3 exemples d’indices de dispersion. Prenons l’exemple de l’écart-type. Un écart-type faible indique que la majorité des observations ont des valeurs proches de la moyenne. À l’inverse, un écart-type important indique que la plupart des points sont éloignés de la moyenne. L’écart-type est une caractéristique de la population que l’on étudie grâce à un échantillon, au même titre que la moyenne. En travaillant sur un échantillon, j’espère accéder aux vraies grandeurs de la population. Même si ces vraies grandeurs sont à jamais inaccessibles (on ne connaîtra jamais parfaitement quelle est la vraie valeur de moyenne <span class="math inline">\(\mu\)</span> ou d’écart-type <span class="math inline">\(\sigma\)</span> de la population), on espère qu’avec un échantillonnage réalisé correctement, la moyenne de l’échantillon (<span class="math inline">\(\bar{x}\)</span> ou <span class="math inline">\(m\)</span>) et l’écart-type (<span class="math inline">\(s\)</span>) de l’échantillon reflètent assez fidèlement les valeurs de la population générale. C’est la notion d’estimateur, intimement liée à la notion d’<strong>inférence statistique</strong> : la moyenne de l’échantillon est un estimateur de la moyenne <span class="math inline">\(\mu\)</span> de la population. C’est la raison pour laquelle on la note parfois <span class="math inline">\(\hat{\mu}\)</span> (en plus de <span class="math inline">\(\bar{x}\)</span> ou <span class="math inline">\(m\)</span>). De même, l’écart-type <span class="math inline">\(s\)</span> et la variance <span class="math inline">\(s^2\)</span> d’un échantillon sont des estimateurs de l’écart-type <span class="math inline">\(\sigma\)</span> et de la variance <span class="math inline">\(\sigma^2\)</span> de la population générale. C’est la raison pour laquelle on les note parfois <span class="math inline">\(\hat{\sigma}\)</span> et <span class="math inline">\(\hat{\sigma}^2\)</span> respectivement. L’accent circonflexe se prononce “chapeau”. On dit donc que <span class="math inline">\(\hat{\sigma}\)</span> (sigma chapeau) est un estimateur de l´écart-type de la population générale. Comme nous l’avons vu, les indices de dispersion doivent accompagner les indices de position lorsque l’on décrit des données, car présenter une valeur de moyenne, ou de médiane seule n’a pas de sens : il faut savoir à quel point les données sont proches ou éloignées de la tendance centrale pour savoir si, dans la population générale, les indicateurs de position correspondent ou non, aux valeurs portées par la majorité des individus.</p>
+<section id="pré-requis" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="pré-requis"><span class="header-section-number">2.1</span> Pré-requis</h2>
+<p>Nous aurons ici besoin des packages suivants :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Pensez à les charger en mémoire si ce n’est pas déjà fait ou si vous venez de démarrer une nouvelle session de travail.</p>
+</section>
+<section id="la-notion-de-dispersion" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="la-notion-de-dispersion"><span class="header-section-number">2.2</span> La notion de dispersion</h2>
+<p>Comme expliqué plus haut, les <strong>indices de dispersion</strong> nous renseignent sur la variabilités des données autour de la valeur centrale (moyenne ou médiane) d’une population ou d’un échantillon. L’écart-type, la variance et l’intervalle interquartile sont 3 exemples d’indices de dispersion. Prenons l’exemple de l’écart-type. Un écart-type faible indique que la majorité des observations ont des valeurs proches de la moyenne. À l’inverse, un écart-type important indique que la plupart des points sont éloignés de la moyenne. L’écart-type est une caractéristique de la population que l’on étudie grâce à un échantillon, au même titre que la moyenne. En travaillant sur un échantillon, on espère accéder aux vraies grandeurs de la population. Même si ces vraies grandeurs sont à jamais inaccessibles (on ne connaîtra jamais parfaitement quelle est la vraie valeur de moyenne <span class="math inline">\(\mu\)</span> ou d’écart-type <span class="math inline">\(\sigma\)</span> de la population), on espère qu’avec un échantillonnage réalisé correctement, la moyenne de l’échantillon (<span class="math inline">\(\bar{x}\)</span> ou <span class="math inline">\(m\)</span>) et l’écart-type (<span class="math inline">\(s\)</span>) de l’échantillon reflètent assez fidèlement les valeurs de la population générale. C’est la notion d’estimateur, intimement liée à la notion d’<strong>inférence statistique</strong> : la moyenne de l’échantillon, que l’on connait avec précision, est un estimateur de la moyenne <span class="math inline">\(\mu\)</span> de la population qui restera à jamais inconnue. C’est la raison pour laquelle la moyenne de l’échantillon est parfois notée <span class="math inline">\(\hat{\mu}\)</span> (en plus de <span class="math inline">\(\bar{x}\)</span> ou <span class="math inline">\(m\)</span>). De même, l’écart-type <span class="math inline">\(s\)</span> et la variance <span class="math inline">\(s^2\)</span> d’un échantillon sont des estimateurs de l’écart-type <span class="math inline">\(\sigma\)</span> et de la variance <span class="math inline">\(\sigma^2\)</span> de la population générale. C’est la raison pour laquelle on les note parfois <span class="math inline">\(\hat{\sigma}\)</span> et <span class="math inline">\(\hat{\sigma}^2\)</span> respectivement. L’accent circonflexe se prononce “chapeau”. On dit donc que <span class="math inline">\(\hat{\sigma}\)</span> (sigma chapeau, l’écart-type de l’échantillon) est un estimateur de l´écart-type de la population générale. Comme nous l’avons vu, les indices de dispersion doivent accompagner les indices de position lorsque l’on décrit des données, car présenter une valeur de moyenne, ou de médiane seule n’a pas de sens : il faut savoir à quel point les données sont proches ou éloignées de la tendance centrale pour savoir si, dans la population générale, les indicateurs de position correspondent ou non, aux valeurs portées par la majorité des individus.</p>
 <p>Nous avons vu plus haut comment calculer des indices de position et de dispersion. Tout ceci devrait donc être clair pour vous à ce stade.</p>
 </section>
-<section id="la-notion-dincertitude" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="la-notion-dincertitude"><span class="header-section-number">2.2</span> La notion d’incertitude</h2>
-<p>Par ailleurs, puisqu’on ne sait jamais avec certitude si nos estimations (de moyennes ou d’écarts-types ou de tout autre paramètre) reflètent fidèlement ou non les vraies valeurs de la population, nous devons quantifier à quel point nos estimations s’écartent de celles de la population générale. C’est ce que permettent les <strong>indices d’incertitude</strong>. Les deux indices d’incertitude les plus connus (et les plus utilisés) sont l’intervalle de confiance à 95% (de la moyenne ou de tout autre estimateur ; les formules sont nombreuses et il n’est pas utile de les détailler ici : nous verrons comment les calculer plus bas) et l’erreur standard de la moyenne (<span class="math inline">\(se_{\bar{x}}\)</span>), dont la formule est la suivante :</p>
+<section id="la-notion-dincertitude" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="la-notion-dincertitude"><span class="header-section-number">2.3</span> La notion d’incertitude</h2>
+<p>Par ailleurs, puisqu’on ne sait jamais avec certitude si nos estimations (de moyennes ou d’écarts-types ou de tout autre paramètre) reflètent fidèlement ou non les vraies valeurs de la population, nous devons quantifier à quel point nos estimations s’écartent de celles de la population générale. C’est tout l’intérêt des statistiques et c’est ce que permettent les <strong>indices d’incertitude</strong> : on ne connaîtra jamais la vraie valeur de moyenne ou d’écart-type de la population, mais on peut quantifier à quel point nos estimations (basées sur un échantillon) sont précises ou imprécises.<br>
+Les deux indices d’incertitude les plus connus (et les plus utilisés) sont l’<strong>intervalle de confiance à 95%</strong> (de la moyenne ou de tout autre estimateur ; les formules sont nombreuses et il n’est pas utile de les détailler ici : nous verrons comment les calculer plus bas) et l’<strong>erreur standard</strong> de la moyenne (<span class="math inline">\(se_{\bar{x}}\)</span>), dont la formule est la suivante :</p>
 <p><span class="math display">\[se_{\bar{x}} = \frac{s}{\sqrt{n}}\]</span></p>
 <p>avec <span class="math inline">\(s\)</span>, l’écart-type de l’échantillon et <span class="math inline">\(n\)</span> la taille de l’échantillon.</p>
 <p>Comme pour la moyenne, on peut calculer l’erreur standard d’un écart-type, d’une médiane, d’une proportion, ou de tout autre estimateur calculé sur un échantillon. Cet indice d’incertitude ne nous renseigne pas sur une grandeur de la population générale qu’on chercherait à estimer, mais bien sur l’incertitude associée à une estimation que nous faisons en travaillant sur un échantillon de taille forcément limitée. Tout processus d’échantillonnage est forcément entaché d’incertitude, causée entre autre par le hasard de l’échantillonnage (ou fluctuation d’échantillonnage). Puisque nous travaillons sur des échantillons forcément imparfaits, les indices d’incertitude vont nous permettre de quantifier à quel point nos estimations s’écartent des vraies valeurs de la population. Ces “vraies valeurs”, faute de pouvoir collecter tous les individus de la population, resteront à jamais inconnues.</p>
@@ -245,19 +257,19 @@ Autrement dit…
 </div>
 <p>En examinant la formule de l’erreur standard de la moyenne présentée ci-dessus, on comprend intuitivement que plus la taille de l’échantillon (<span class="math inline">\(n\)</span>) augmente, plus l’erreur standard (donc l’incertitude) associée à notre estimation de moyenne diminue. Autrement dit, plus les données sont abondantes dans l’échantillon, meilleure sera notre estimation de moyenne, et donc, moins le risque de raconter des bêtises sera grand.</p>
 <p>L’autre indice d’incertitude très fréquemment utilisé est l’intervalle de confiance à 95% (de la moyenne, de la médiane, de la variance, ou de toute autre estimateur calculé dans un échantillon). L’intervalle de confiance nous renseigne sur la gamme des valeurs les plus probables pour un paramètre de la population étudiée. Par exemple, si j’observe, dans un échantillon, une moyenne de 10, avec un intervalle de confiance calculé de [7 ; 15], cela signifie que, dans la population générale, la vraie valeur de moyenne a de bonnes chances de se trouver dans l’intervalle [7 ; 15]. Dans la population générale, toutes les valeurs comprises entre 7 et 15 sont vraisemblables pour la moyenne alors que les valeurs situées en dehors de cet intervalle sont moins probables. Une autre façon de comprendre l’intervalle de confiance est de dire que si je récupère un grand nombre d’échantillons dans la même population, en utilisant exactement le même protocole expérimental, 95% des échantillons que je vais récupérer auront une moyenne située à l’intérieur de l’intervalle de confiance à 95%, et 5% des échantillons auront une moyenne située à l’extérieur de l’intervalle de confiance à 95%. C’est une notion qui n’est pas si évidente que ça à comprendre, donc prenez bien le temps de relire cette section si besoin, et de poser des questions le cas échéant.</p>
-<p>Concrètement, plus l’intervalle de confiance est large, moins notre confiance est grande. Si, pour une moyenne d’échantillon de 10, l’intervalle de confiance à 95% vaut [9,5 ; 11], la gamme des valeurs probables pour la moyenne est étroite. Autrement dit, la moyenne de l’échantillon, qui vaut 10, a de bonne chances d’être très proche de la vraie valeur de moyenne de la population générale.</p>
-<p>La notion d’intervalle de confiance à 95% est donc très proche de celle d’erreur standard. D’ailleurs, pour la plupart des grandeurs d’un échantillon, l’intervalle de confiance est très souvent calculé à partir de l’erreur standard.</p>
+<p>Concrètement, plus l’intervalle de confiance est large, moins notre confiance est grande. Si la moyenne d’un échantillon vaut <span class="math inline">\(\bar{x} = 10\)</span>, et que son intervalle de confiance à 95% vaut [9,5 ; 11], la gamme des valeurs probables pour la moyenne de la population est étroite. Autrement dit, la moyenne de l’échantillon (10), a de bonne chances d’être très proche de la vraie valeur de moyenne de la population générale (vraisemblablement comprise quelque part entre 9,5 et 11). À l’inverse, si l’intervalle de confiance à 95% de la moyenne vaut [4 ; 17], la gamme des valeurs possibles pour la vraie moyenne de la population est grande. La moyenne de l’échantillon aura donc de grandes chances d’être assez éloignée de la vraie valeur de la population.</p>
+<p>La notion d’intervalle de confiance à 95% est donc très proche de celle d’erreur standard. D’ailleurs, pour de nombreux paramètres, l’intervalle de confiance est calculé à partir de l’erreur standard.</p>
 </section>
-<section id="sec-errstd" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="sec-errstd"><span class="header-section-number">2.3</span> Calcul de l’erreur standard de la moyenne</h2>
-<p>Contrairement aux indices de position et de dispersion, il n’existe pas de fonction intégrée à <code>R</code> qui permette de calculer l’erreur standard de la moyenne. Toutefois, sa formule très simple nous permet de la calculer à la main quand on en a besoin grâce aux fonction <code>group_by()</code> et <code>summarise()</code>.</p>
-<p>Par exemple, reprenons les données de température (tableau <code>weather</code>, colonne <code>temp</code>) dans les 3 aéroports de New York (colonne <code>origin</code>). Imaginons que nous souhaitions étudier les fluctuations de températures au fil des mois de l’année 2013 :</p>
+<section id="sec-errstd" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="sec-errstd"><span class="header-section-number">2.4</span> Calcul de l’erreur standard de la moyenne</h2>
+<p>Contrairement aux indices de position et de dispersion, il n’existe pas de fonction intégrée à <code>R</code> qui permette de calculer l’erreur standard de la moyenne. Toutefois, sa formule très simple nous permet de la calculer à la main quand on en a besoin grâce à la fonction <code>summarise()</code>.</p>
+<p>Par exemple, reprenons les données de température (tableau <code>weather</code> du package <code>nycflights13</code>, colonne <code>temp</code>) dans les 3 aéroports de New York (colonne <code>origin</code>). Imaginons que nous souhaitions étudier les fluctuations de températures au fil des mois de l’année 2013 :</p>
 <ol type="1">
 <li>Je vais commencer par transformer les températures (fournies en degrés Fahrenheit) en degrés Celsius :</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">%&gt;%</span> </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp_celsius =</span> (temp <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> <span class="fl">1.8</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp_celsius =</span> (temp <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> <span class="fl">1.8</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 26,115 × 16
    origin  year month   day  hour  temp  dewp humid wind_dir wind_speed wind_g…¹
@@ -278,20 +290,17 @@ Autrement dit…
 </div>
 </div>
 <ol start="2" type="1">
-<li>Ensuite, je détermine, pour chaque jour de chaque mois de l’année, et pour chaque aéroport, quelle est la température maximale atteinte :</li>
+<li>Ensuite, je détermine, pour chaque jour de chaque mois de l’année, et pour chaque aéroport, quelle est la température maximale atteinte, et je stocke ces valeurs dans un nouvel objet pour pouvoir le ré-utiliser :</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">%&gt;%</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp_celsius =</span> (temp <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> <span class="fl">1.8</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(origin, month, day) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">temperature_max =</span> <span class="fu">max</span>(temp_celsius, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'origin', 'month'. You can override using
-the `.groups` argument.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>temp_jour <span class="ot">&lt;-</span> weather <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp_celsius =</span> (temp <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> <span class="fl">1.8</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">temperature_max =</span> <span class="fu">max</span>(temp_celsius, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(origin, month, day))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>temp_jour</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,092 × 4
-# Groups:   origin, month [36]
    origin month   day temperature_max
    &lt;chr&gt;  &lt;int&gt; &lt;int&gt;           &lt;dbl&gt;
  1 EWR        1     1            5   
@@ -311,20 +320,11 @@ the `.groups` argument.</code></pre>
 <li>Je peux maintenant calculer la température moyenne mensuelle pour chaque aéroport :</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">%&gt;%</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp_celsius =</span> (temp <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> <span class="fl">1.8</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(origin, month, day) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">temperature_max =</span> <span class="fu">max</span>(temp_celsius, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(temperature_max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'origin', 'month'. You can override using
-the `.groups` argument.
-`summarise()` has grouped output by 'origin'. You can override using the
-`.groups` argument.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>temp_jour <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(temperature_max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(origin, month))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 36 × 3
-# Groups:   origin [3]
    origin month moyenne
    &lt;chr&gt;  &lt;int&gt;   &lt;dbl&gt;
  1 EWR        1    5.69
@@ -342,28 +342,20 @@ the `.groups` argument.
 </div>
 <p>Pour pouvoir réutiliser ce tableau, je lui donne un nom :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>temperatures <span class="ot">&lt;-</span> weather <span class="sc">%&gt;%</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp_celsius =</span> (temp <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> <span class="fl">1.8</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(origin, month, day) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">temperature_max =</span> <span class="fu">max</span>(temp_celsius, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(temperature_max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'origin', 'month'. You can override using
-the `.groups` argument.
-`summarise()` has grouped output by 'origin'. You can override using the
-`.groups` argument.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>temp_moyennes <span class="ot">&lt;-</span> temp_jour <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(temperature_max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(origin, month))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Au final, je peux faire un graphique de l’évolution de ces températures :</p>
 <div class="cell" data-fig.asp="1">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>temperatures <span class="sc">%&gt;%</span> </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(month), <span class="at">y =</span> moyenne)) <span class="sc">+</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>origin, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Mois"</span>, </span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Moyenne des températures quotidiennes maximales (ºC)"</span>) <span class="sc">+</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>temp_moyennes <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(month), <span class="at">y =</span> moyenne)) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>origin, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Mois"</span>, </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Moyenne des températures quotidiennes maximales (ºC)"</span>) <span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="02-incertitude_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -375,22 +367,13 @@ the `.groups` argument.
 </ol>
 <p>Pour les 3 aéroports, les profils de températures sont très proches. C’est tout à fait logique puisqu’ils sont situés dans un rayon de quelques kilomètres seulement. Le problème de ce graphique est que chaque point a été obtenu en calculant une moyenne. En janvier, nous avons fait la moyenne de 31 valeurs de températures quotidiennes pour chaque aéroport. En février, nous avons fait la moyenne de 28 valeurs de températures quotidiennes pour chaque aéroport. Et ainsi de suite pour tous les mois de l’année 2013. Puisque nous présentons des valeurs de moyennes, il nous faut présenter également <strong>l’incertitude associée à ces calculs de moyennes</strong>. Pour cela, nous devons calculer l’erreur standard des moyennes :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">%&gt;%</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp_celsius =</span> (temp <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> <span class="fl">1.8</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(origin, month, day) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">temperature_max =</span> <span class="fu">max</span>(temp_celsius, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(temperature_max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">N_obs =</span> <span class="fu">n</span>(),</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">erreur_standard =</span> <span class="fu">sd</span>(temperature_max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">sqrt</span>(N_obs))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'origin', 'month'. You can override using
-the `.groups` argument.
-`summarise()` has grouped output by 'origin'. You can override using the
-`.groups` argument.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>temp_jour <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(temperature_max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">N_obs =</span> <span class="fu">n</span>(),</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">erreur_standard =</span> <span class="fu">sd</span>(temperature_max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">sqrt</span>(N_obs),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(origin, month))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 36 × 5
-# Groups:   origin [3]
    origin month moyenne N_obs erreur_standard
    &lt;chr&gt;  &lt;int&gt;   &lt;dbl&gt; &lt;int&gt;           &lt;dbl&gt;
  1 EWR        1    5.69    31           1.14 
@@ -409,36 +392,19 @@ the `.groups` argument.
 <p>Notre tableau de statistiques descriptives possède maintenant 2 colonnes supplémentaires : le nombre d’observations (que j’ai nommé <code>N_obs</code>), et l’erreur standard associée à chaque moyenne, calculée grâce à la formule vue plus haut <span class="math inline">\(se_{\bar{x}} = \frac{s}{\sqrt{n}}\)</span> (la fonction <code>sqrt()</code> permet de calculer la racine carrée). On constate que l’erreur standard, qui s’exprime dans la même unité que la moyenne, est variable selon les mois de l’année. Ainsi, pour l’aéroport de Newark, l’incertitude semble particulièrement faible pour le mois d’août (0.385 ºC) mais presque 3 fois plus forte pour le mois de janvier (1.14 ºC).</p>
 <p>Une fois de plus, je donne un nom à ce tableau de données pour pouvoir le réutiliser plus tard :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>temperatures_se <span class="ot">&lt;-</span> weather <span class="sc">%&gt;%</span> </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp_celsius =</span> (temp <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> <span class="fl">1.8</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(origin, month, day) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">temperature_max =</span> <span class="fu">max</span>(temp_celsius, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(temperature_max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">N_obs =</span> <span class="fu">n</span>(),</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">erreur_standard =</span> <span class="fu">sd</span>(temperature_max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">sqrt</span>(N_obs))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'origin', 'month'. You can override using
-the `.groups` argument.
-`summarise()` has grouped output by 'origin'. You can override using the
-`.groups` argument.</code></pre>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>temperatures_se <span class="ot">&lt;-</span> temp_jour <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(temperature_max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">N_obs =</span> <span class="fu">n</span>(),</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">erreur_standard =</span> <span class="fu">sd</span>(temperature_max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">sqrt</span>(N_obs),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(origin, month))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<p>Notez que le package <code>ggplot2</code> contient une fonction permettant de calculer à la fois la moyenne et erreur standard de la moyenne d’un échantillon :</p>
+<p>Notez que le package <code>ggplot2</code> contient une fonction permettant de calculer à la fois la moyenne et erreur standard de la moyenne d’un échantillon : <code>mean_se()</code>. Puisque cette fonction renvoie 3 valeurs (<span class="math inline">\(\bar{x}\)</span>, <span class="math inline">\(\bar{x} - se\)</span> et <span class="math inline">\(\bar{x} + se\)</span>), on utilise <code>reframe()</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">%&gt;%</span> </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp_celsius =</span> (temp <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> <span class="fl">1.8</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(origin, month, day) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">temperature_max =</span> <span class="fu">max</span>(temp_celsius, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">mean_se</span>(temperature_max))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'origin', 'month'. You can override using
-the `.groups` argument.
-`summarise()` has grouped output by 'origin'. You can override using the
-`.groups` argument.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>temp_jour <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">mean_se</span>(temperature_max), </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">.by =</span> <span class="fu">c</span>(origin, month))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 36 × 5
-# Groups:   origin [3]
    origin month     y  ymin  ymax
    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
  1 EWR        1  5.69  4.55  6.82
@@ -456,33 +422,24 @@ the `.groups` argument.
 </div>
 <p>Les résultats obtenus ne sont pas exactement au même format :</p>
 <ul>
-<li>la colonne <code>y</code> contient les valeurs de moyennes</li>
-<li>la colonne <code>ymin</code> contient la valeur de moyenne moins une fois l’erreur standard</li>
-<li>la colonne <code>ymax</code> contient la valeur de moyenne plus une fois l’erreur standard</li>
+<li>la colonne <code>y</code> contient les valeurs de moyennes (<span class="math inline">\(\bar{x}\)</span>)</li>
+<li>la colonne <code>ymin</code> contient la valeur de moyenne moins une fois l’erreur standard (<span class="math inline">\(\bar{x} - se\)</span>)</li>
+<li>la colonne <code>ymax</code> contient la valeur de moyenne plus une fois l’erreur standard (<span class="math inline">\(\bar{x} + se\)</span>)</li>
 </ul>
 <p>Il ne nous restera plus qu’à ajouter des barres d’erreur sur notre graphique pour visualiser l’incertitude associée à chaque valeur de moyenne.</p>
 </section>
-<section id="sec-confint" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="sec-confint"><span class="header-section-number">2.4</span> Calculs d’intervalles de confiance à 95%</h2>
-<p>Comme pour les erreurs standard, il est possible de calculer des intervalles de confiance de n’importe quel estimateur calculé à partir d’un échantillon, pour déterminer la gamme des valeurs les plus probables pour les paramètres équivalents dans la population générale. Nous nous concentrerons ici sur le calcul des intervalles de confiance à 95% de la moyenne, mais nous serons amenés à examiner également l’intervalle de confiance de la médiane, puis, dans la <span class="quarto-unresolved-ref">?sec-moy2</span>, l’intervalle de confiance à 95% d’une différence de moyennes.</p>
+<section id="sec-confint" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="sec-confint"><span class="header-section-number">2.5</span> Calculs d’intervalles de confiance à 95%</h2>
+<p>Comme pour les erreurs standard, il est possible de calculer des intervalles de confiance de n’importe quel estimateur calculé à partir d’un échantillon, pour déterminer la gamme des valeurs les plus probables pour les paramètres équivalents dans la population générale. Nous nous concentrerons ici sur le calcul des intervalles de confiance à 95% de la moyenne, mais nous serons amenés à examiner également l’intervalle de confiance de la médiane, puis, au cours de votre L3, l’intervalle de confiance à 95% d’une différence de moyennes.</p>
 <p>Contrairement à l’erreur standard, il n’y a pas qu’une bonne façon de calculer l’intervalle de confiance à 95% d’une moyenne. Plusieurs formules existent et le choix de la formule dépend en partie de la distribution des données (la distribution suit-elle une loi Normale ou non) et de la taille de l’échantillon dont nous disposons (<span class="math inline">\(n\)</span> est-il supérieur à 30 ou non ?). Dans la situation idéale d’une variable qui suit la distribution Normale, les bornes inférieures et supérieures de l’intervalle de confiance à 95% sont obtenues grâce à cette formule</p>
 <p><span class="math display">\[\bar{x} - 1.96 \cdot \frac{s}{\sqrt{n}} &lt; \mu &lt; \bar{x} + 1.96 \cdot \frac{s}{\sqrt{n}}\]</span></p>
 <p>Autrement dit, la vraie moyenne <span class="math inline">\(\mu\)</span> d’une population a de bonnes chances de se trouver dans un intervalle de plus ou moins 1.96 fois l’erreur standard de la moyenne. En première approximation, l’intervalle de confiance est donc la moyenne de l’échantillon <span class="math inline">\(\bar{x}\)</span> plus ou moins 2 fois l’erreur standard (que nous avons appris à calculer à la main un peu plus tôt). On peut donc calculer à la main les bornes inférieures et supérieures de l’intervalle de confiance ainsi :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">%&gt;%</span> </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp_celsius =</span> (temp <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> <span class="fl">1.8</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(origin, month, day) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">temperature_max =</span> <span class="fu">max</span>(temp_celsius, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">mean_se</span>(temperature_max, <span class="at">mult =</span> <span class="fl">1.96</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'origin', 'month'. You can override using
-the `.groups` argument.
-`summarise()` has grouped output by 'origin'. You can override using the
-`.groups` argument.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>temp_jour <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">mean_se</span>(temperature_max, <span class="at">mult =</span> <span class="fl">1.96</span>),</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">.by =</span> <span class="fu">c</span>(origin, month))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 36 × 5
-# Groups:   origin [3]
    origin month     y  ymin  ymax
    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
  1 EWR        1  5.69  3.46  7.92
@@ -505,20 +462,11 @@ the `.groups` argument.
 </ul>
 <p>Dans la pratique, puisque cette méthode reste approximative et dépend de la nature des données dont on dispose, on utilisera plutôt des fonctions spécifiques qui calculeront pour nous les intervalles de confiance à 95% de nos estimateurs. C’est ce que permet en particulier la fonction <code>mean_cl_normal()</code> du package <code>ggplot2</code>. Il est toutefois important de bien comprendre qu’il y a un lien étroit entre l’erreur standard (l’incertitude associées à l’estimation d’un paramètre d’une population à partir des données d’un échantillon), et l’intervalle de confiance à 95% de ce paramètre.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">%&gt;%</span> </span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp_celsius =</span> (temp <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> <span class="fl">1.8</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(origin, month, day) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">temperature_max =</span> <span class="fu">max</span>(temp_celsius, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">mean_cl_normal</span>(temperature_max))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'origin', 'month'. You can override using
-the `.groups` argument.
-`summarise()` has grouped output by 'origin'. You can override using the
-`.groups` argument.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>temp_jour <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">mean_cl_normal</span>(temperature_max),</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(origin, month))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 36 × 5
-# Groups:   origin [3]
    origin month     y  ymin  ymax
    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
  1 EWR        1  5.69  3.36  8.01
@@ -543,10 +491,9 @@ the `.groups` argument.
 <p>Pour que la suite soit plus claire, nous allons afficher et donner des noms à ces différents tableaux en prenant soin de renommer les colonnes pour plus de clarté.</p>
 <p>Tout d’abord, nous disposons du tableau <code>temperatures_se</code>, qui contient, les moyennes des températures mensuelles de chaque aéroport de New York en 2013, et les erreurs standard de ces moyennes :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>temperatures_se</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>temperatures_se</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 36 × 5
-# Groups:   origin [3]
    origin month moyenne N_obs erreur_standard
    &lt;chr&gt;  &lt;int&gt;   &lt;dbl&gt; &lt;int&gt;           &lt;dbl&gt;
  1 EWR        1    5.69    31           1.14 
@@ -564,24 +511,16 @@ the `.groups` argument.
 </div>
 <p>Ensuite, nous avons produit un tableau presque équivalent que nous allons nommer <code>temperature_se_bornes</code> et pour lequel nous allons modifier le nom des colonnes <code>y</code>, <code>ymin</code> et <code>ymax</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>temperature_se_bornes <span class="ot">&lt;-</span> weather <span class="sc">%&gt;%</span> </span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp_celsius =</span> (temp <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> <span class="fl">1.8</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(origin, month, day) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">temperature_max =</span> <span class="fu">max</span>(temp_celsius, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">mean_se</span>(temperature_max)) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">moyenne =</span> y,</span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">moyenne_moins_se =</span> ymin,</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">moyenne_plus_se =</span> ymax)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'origin', 'month'. You can override using
-the `.groups` argument.
-`summarise()` has grouped output by 'origin'. You can override using the
-`.groups` argument.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>temperature_se_bornes</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>temperature_se_bornes <span class="ot">&lt;-</span> temp_jour <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">mean_se</span>(temperature_max),</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(origin, month)) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">moyenne =</span> y,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">moyenne_moins_se =</span> ymin,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">moyenne_plus_se =</span> ymax)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>temperature_se_bornes</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 36 × 5
-# Groups:   origin [3]
    origin month moyenne moyenne_moins_se moyenne_plus_se
    &lt;chr&gt;  &lt;int&gt;   &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt;
  1 EWR        1    5.69             4.55            6.82
@@ -599,24 +538,16 @@ the `.groups` argument.
 </div>
 <p>Nous avons ensuite calculé manuellement des intervalles de confiance approximatifs, avec la fonction <code>mean_se()</code> et son argument <code>mult = 1.96</code>. Là encore, nous allons stocker cet objet dans un tableau nommé <code>temperatures_ci_approx</code>, et nous allons modifier le nom des colonnes <code>y</code>, <code>ymin</code>, et <code>ymax</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>temperature_ci_approx <span class="ot">&lt;-</span> weather <span class="sc">%&gt;%</span> </span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp_celsius =</span> (temp <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> <span class="fl">1.8</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(origin, month, day) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">temperature_max =</span> <span class="fu">max</span>(temp_celsius, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">mean_se</span>(temperature_max, <span class="at">mult =</span> <span class="fl">1.96</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">moyenne =</span> y,</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">ci_borne_inf =</span> ymin,</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">ci_borne_sup =</span> ymax)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'origin', 'month'. You can override using
-the `.groups` argument.
-`summarise()` has grouped output by 'origin'. You can override using the
-`.groups` argument.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>temperature_ci_approx</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>temperature_ci_approx <span class="ot">&lt;-</span> temp_jour <span class="sc">%&gt;%</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">mean_se</span>(temperature_max, <span class="at">mult =</span> <span class="fl">1.96</span>),</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">.by =</span> <span class="fu">c</span>(origin, month)) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">moyenne =</span> y,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">ci_borne_inf =</span> ymin,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">ci_borne_sup =</span> ymax)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>temperature_ci_approx</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 36 × 5
-# Groups:   origin [3]
    origin month moyenne ci_borne_inf ci_borne_sup
    &lt;chr&gt;  &lt;int&gt;   &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
  1 EWR        1    5.69         3.46         7.92
@@ -634,24 +565,16 @@ the `.groups` argument.
 </div>
 <p>Enfin, nous avons calculé les intervalles de confiance avec une fonction spécialement dédiée à cette tâche : la fonction <code>mean_cl_normal()</code>. Nous allons stocker cet objet dans un tableau nommé <code>temperatures_ci</code>, et nous allons modifier le nom des colonnes <code>y</code>, <code>ymin</code>, et <code>ymax</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>temperature_ci <span class="ot">&lt;-</span> weather <span class="sc">%&gt;%</span> </span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp_celsius =</span> (temp <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> <span class="fl">1.8</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(origin, month, day) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">temperature_max =</span> <span class="fu">max</span>(temp_celsius, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">mean_cl_normal</span>(temperature_max)) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">moyenne =</span> y,</span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">ci_borne_inf =</span> ymin,</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">ci_borne_sup =</span> ymax)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'origin', 'month'. You can override using
-the `.groups` argument.
-`summarise()` has grouped output by 'origin'. You can override using the
-`.groups` argument.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>temperature_ci</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>temperature_ci <span class="ot">&lt;-</span> temp_jour <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">mean_cl_normal</span>(temperature_max),</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">.by =</span> <span class="fu">c</span>(origin, month)) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">moyenne =</span> y,</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">ci_borne_inf =</span> ymin,</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">ci_borne_sup =</span> ymax)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>temperature_ci</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 36 × 5
-# Groups:   origin [3]
    origin month moyenne ci_borne_inf ci_borne_sup
    &lt;chr&gt;  &lt;int&gt;   &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
  1 EWR        1    5.69         3.36         8.01
@@ -669,13 +592,12 @@ the `.groups` argument.
 </div>
 <p>Maintenant, si l’on compare les 2 tableaux contenant les calculs d’intervalles de confiance de la moyenne, on constate que les résultats sont très proches :</p>
 <div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>temperature_ci_approx</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>temperature_ci</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>temperature_ci_approx</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>temperature_ci</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <pre><code># A tibble: 36 × 5
-# Groups:   origin [3]
    origin month moyenne ci_borne_inf ci_borne_sup
    &lt;chr&gt;  &lt;int&gt;   &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
  1 EWR        1    5.69         3.46         7.92
@@ -692,7 +614,6 @@ the `.groups` argument.
 </div>
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <pre><code># A tibble: 36 × 5
-# Groups:   origin [3]
    origin month moyenne ci_borne_inf ci_borne_sup
    &lt;chr&gt;  &lt;int&gt;   &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
  1 EWR        1    5.69         3.36         8.01
