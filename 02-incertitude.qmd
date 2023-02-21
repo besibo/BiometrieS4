@@ -7,7 +7,7 @@ editor_options:
 
 ## Pré-requis
 
-Nous aurons ici besoin des packages suivants :
+Nous avons ici besoin des packages suivants :
 
 ```{r}
 #| message: false
