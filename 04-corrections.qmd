@@ -268,7 +268,7 @@ penguins %>%
             sd_mass = sd(body_mass_g, na.rm = TRUE),
             se_mass = sd_mass/sqrt(n()),
             .by = c(species, sex)) %>% 
-  kableExtra::kable()
+  print(width = Inf)
 ```
 
 
