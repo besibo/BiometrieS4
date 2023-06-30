@@ -342,7 +342,7 @@ Vous connaissez maintenant plusieurs méthodes pour calculer à la main des stat
 
 Et la liste n'est bien sûr pas exhaustive
 
-### Exercices {#Exo-10}
+### Exercices {#sec-exo10}
 
 1. Avec le tableau `diamonds` du package `ggplot2`, faites un tableau indiquant combien de diamants de chaque couleur on dispose. Vous devriez obtenir le tableau suivant :
 
@@ -744,7 +744,7 @@ Vous comprenez j'espère l'importance d'examiner ce genre de résumé des donné
 :::
 
 
-### Exercice
+### Exercice {#sec-exo20}
 
 En utilisant les fonctions de résumé abordées jusqu'ici et le tableau `weather`, répondez aux questions suivante :
 

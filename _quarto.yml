@@ -15,6 +15,7 @@ book:
     - 01-dispersion.qmd
     - 02-incertitude.qmd
     - 03-graphiques.qmd
+    - 04-corrections.qmd
     - references.qmd
 
 bibliography: all.bib

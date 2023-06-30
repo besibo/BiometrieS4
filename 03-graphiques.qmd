@@ -250,7 +250,7 @@ weather %>%
 
 Des encoches ont été ajoutées autour de la médiane de chaque boîte à moustache. Ces encoches sont des encoches d'incertitudes. Les limites inférieures et supérieures de ces encoches correspondent aux bornes inférieures et supérieures de l'intervalle de confiance à 95% des médianes. Comme pour les moyennes, le chevauchement ou l'absence de chevauchement entre les encoches de 2 séries de données nous renseigne sur l'issue probable des futurs tests statistiques que nous serions amenés à réaliser. Il sera donc important de bien examiner ces encoches en amont des tests statistiques pour éviter de faire/dire des bêtises...
 
-## Exercice
+## Exercice {#sec-ploterrbar}
 
 1. Avec le tableau `penguins`, calculez les grandeurs suivantes pour chaque espèce de manchot et chaque sexe :
 - la moyenne de la longueur des nageoires

@@ -1,0 +1,305 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+# Correction des exercices
+
+Mise en mémoire des packages nécessaires.
+
+```{r}
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(skimr)
+library(palmerpenguins)
+library(nycflights13)
+```
+
+## Correction de l'exercice de la @sec-exo10
+
+1. Avec le tableau `diamonds` du package `ggplot2`, faites un tableau indiquant combien de diamants de chaque couleur on dispose.
+
+```{r, tidy=FALSE, echo=TRUE}
+diamonds %>% 
+  count(color)
+```
+
+
+2. Examinez le tableau `weather` du package `nycflights13` et lisez son fichier d'aide pour comprendre à quoi correspondent les données et comment elles ont été acquises.
+
+```{r}
+#| eval: false
+weather
+?weahter
+```
+
+
+3. À partir du tableau `weather` faites un tableau indiquant les vitesses de vents minimales, maximales et moyennes, enregistrées chaque mois dans chaque aéroport de New York. Indice : les 3 aéroports de New York sont Newark, LaGuardia Airport et John F. Kennedy, notés respectivement `EWR`, `LGA` et `JFK` dans la variable `origin`. 
+
+```{r, tidy=FALSE, echo=TRUE}
+windy <- weather %>%
+  summarise(max_wind = max(wind_speed, na.rm = TRUE),
+            min_wind = min(wind_speed, na.rm = TRUE),
+            moy_wind = mean(wind_speed, na.rm = TRUE),
+            .by = c(origin, month))
+windy
+```
+
+4. Sachant que les vitesses du vent sont exprimées en miles par heure, certaines valeurs sont-elles surprenantes ? À l'aide de la fonction `filter()`, éliminez la ou les valeurs aberrantes.
+
+Oui, les vitesses de vent supérieures à 100 mph devraient être rares :
+
+```{r}
+windy %>% 
+  filter(max_wind > 100)
+```
+
+Ici, 1048 mph est impossible. Il s'agit soit d'un dysfonctionnement de l'appareil de mesure, soit d'une erreur de saisie. Pour éliminer cette valeur aberrante, on utilise `filter()` :
+
+
+```{r}
+windy2 <- weather %>%
+  filter(wind_speed <= 500) %>%
+  summarise(max_wind = max(wind_speed, na.rm = TRUE),
+            min_wind = min(wind_speed, na.rm = TRUE),
+            moy_wind = mean(wind_speed, na.rm = TRUE),
+            .by = c(origin, month))
+windy2
+```
+
+5. En utilisant les données de vitesse de vent du tableau `weather`, produisez le graphique suivant :
+
+```{r windspeed, tidy=FALSE, warning = FALSE, echo = TRUE}
+weather %>%
+  filter(wind_speed < 500) %>%
+  ggplot(aes(x = factor(month), y = wind_speed)) +
+  geom_jitter(width = 0.2, height = 0, alpha = 0.2) +
+  labs(x = "Mois",
+       y = "Vitesse du vent (mph)")
+```
+
+
+6. À votre avis :
+
+- pourquoi les points sont-ils organisés en bandes horizontales ? 
+
+Parce que l'appareil de mesure enregistre probablement des vitesses de vent arrondies au mile par heure le plus proche (pas de valeurs enregsitrées), ou parce que les valeurs ont été arrondies à l'entier le plus proche avant enregistrement dans la base de données.
+
+- pourquoi n'y a-t-il jamais de vent entre 0 et environ 3 miles à l'heure (mph) ? 
+
+Cela est probablement dû au seuil de détection de l'appareil d'enregistrement qui est incapable de détecter des des vitesses inferieures à ce seuil. Cela ne veut pas dire qu'il n'y a jamais eu de vent inférieur à 3 mph.
+
+- Sachant qu'en divisant des mph par 1.151 on obtient des vitesses en nœuds, que nous apprend cette commande :
+
+```{r}
+sort(unique(weather$wind_speed)) / 1.151
+```
+
+Que l'appareil n'enregistre que des vitesses de vent entières, en nœuds, à partir de 3 nœuds (3, 4, 5, etc.). La transformation en mph n'est probablement effectuées qu'ensuite et explique les erreurs d'arrondis.
+
+
+## Correction de l'exercice de la @sec-exo20
+
+En utilisant les fonctions de résumé abordées jusqu'ici et le tableau `weather`, répondez aux questions suivante :
+
+```{r}
+#| include: false
+weather %>% 
+  filter(wind_speed < 500) %>% 
+  select(origin, precip, wind_speed, wind_gust) %>% 
+  group_by(origin) %>% 
+  skim()
+```
+
+```{r}
+#| include: false
+weather %>% 
+  filter(wind_speed < 500) %>% 
+  select(temp, month) %>% 
+  group_by(month) %>% 
+  skim()
+```
+
+1. Dans quel aéroport de New York les précipitations moyennes ont-elle été les plus fortes en 2013 ?
+
+```{r}
+weather %>% 
+  summarise(precip_moyenne = mean(precip), .by = origin) %>% 
+  arrange(desc(precip_moyenne))
+```
+
+Les précipitations horaires moyennes les plus fortes sont enregistrées dans l'aéroport EWR (Newark). Si on s'intéresse plutôt aux précipitations mensuelles :
+
+```{r}
+weather %>% 
+  group_by(origin, month) %>% 
+  summarise(precip_tot = sum(precip)) %>%       # Cumul de précipitation chaque mois et dans chaqe aéroport
+  summarise(precip_moy = mean(precip_tot)) %>%  # Calcul des moyennes mensuelles pour chaque aeroport 
+  arrange(desc(precip_moy))                     # Tri par ordre décroissant de précipitations moyennes
+```
+
+Logiquement, c'est toujours dans l'aéroport de Newark que les précipitations mensuelles moyennes sont les plus fortes (3,66 pouces par mois en moyenne).
+
+2. Dans quel aéroport de New York la vitesse du vent moyenne était-elle la plus forte en 2013 ? Quelle est cette vitesse ?
+
+```{r}
+weather %>% 
+  summarise(wind_moyenne = mean(wind_speed, na.rm = TRUE),
+            .by = origin) %>% 
+  arrange(desc(wind_moyenne))
+```
+
+Le vent moyen le plus fort est observé à JFK, et vaut 11.5 miles à l'heure. Attention, ça n'est pas le vent le plus fort observé, mais bien le **vent moyen** le plus fort.
+
+3. Dans quel aéroport de New York les rafales de vent étaient-elles les plus variables en 2013 ? Quel indice statistique vous donne cette information et quelle est sa valeur ?
+
+```{r}
+weather %>% 
+  summarise(rafales_var = var(wind_gust, na.rm = TRUE),
+            .by = origin) %>% 
+  arrange(desc(rafales_var))
+```
+
+C'est à l'aéroport JFK que les rafales de vent étaient les plus variables en 2013. La variance de 37.5 mph$^2$ nous renseigne sur cette variabilité. Une autre façon d'arriver à cette même conclusion consiste à utiliser la fonction `skim()` sur la variable `wind_gust` et les données groupées par aéroport (variable `origin`) :
+
+```{r}
+weather %>% 
+  select(origin, wind_gust) %>% 
+  group_by(origin) %>% 
+  skim()
+```
+
+Ici, c'est l'indice noté `sd` qui nous renseigne. Il s'agit de l'écart-type qui est exprimé dans la même unité que les données de départ. La variabilité des rafales de vent est donc bien la plus forte à l'aéroport JFK, avec un écart-type de 6.13 mph.
+
+4. Les précipitation dans les 3 aéroports de New-York ont-elles une distribution symétrique ?
+
+```{r}
+#| fig-asp: 1
+weather %>% 
+  ggplot(aes(x = precip, fill = origin)) +
+  geom_histogram(alpha = 0.5, show.legend = FALSE) +
+  geom_rug() +
+  facet_wrap(~origin, ncol = 1)
+```
+
+La distribution des précipitations est très clairement asymétrique, avec un très grand nombre de relevés avec aucune précipitation (ce qui explique la très grande barre à la valeur 0), puis une diminution rapide des fréquences auxquelles les précipitations importantes sont observées. D'ailleurs, même en retirant les enregistrement où aucune précipitation n'est détectée, la distribution n'est pas non plus symétrique :
+
+```{r}
+#| fig-asp: 1
+weather %>% 
+  filter(precip > 0 ) %>% 
+  ggplot(aes(x = precip, fill = origin)) +
+  geom_histogram(alpha = 0.5, show.legend = FALSE) +
+  geom_rug() +
+  facet_wrap(~origin, ncol = 1)
+```
+
+5. Quelle est la température médiane observée en 2013 tous aéroports confondus ?
+
+```{r}
+weather %>% 
+  summarise(temo_med = median(temp, na.rm = TRUE))
+```
+
+La température médiane, tous aéroports confondue, observée en 2013, vaut `r weather %>%   summarise(temo_med = median(temp, na.rm = TRUE))` degrés Fahrenheit.
+
+6. Tous aéroports confondus, quel est le mois de l'année où la température a été la plus variable en 2013 ? Quelles étaient les températures minimales et maximales observées ce mois-là ?
+
+```{r}
+weather %>% 
+  group_by(month) %>% 
+  summarise(temp_var = var(temp, na.rm = TRUE),
+            temp_sd  = sd(temp, na.rm = TRUE),
+            temp_min = min(temp, na.rm = TRUE),
+            temp_max = max(temp, na.rm = TRUE)) %>% 
+  arrange(desc(temp_var))
+```
+
+C'est en Novembre que les températures ont été les plus variables avec un écart-type de 10.4 degrés Fahrenheit. Ce même mois, la température minimale observée était de 21ºF et la température maximale de 71.1ºF. 
+
+
+
+## Correction de l'exercice de la @sec-ploterrbar
+
+1. Avec le tableau `penguins`, calculez les grandeurs suivantes pour chaque espèce de manchot et chaque sexe :
+- la moyenne de la longueur des nageoires
+- la variance de la longueur des nageoires
+- l'écart-type de la longueur des nageoires
+- l'erreur standard de la longueur moyenne des nageoires
+- la moyenne de la masse corporelle
+- la variance de la masse corporelle
+- l'écart-type de la masse corporelle
+- l'erreur standard de la masse corporelle moyenne
+
+Attention : pensez à retirer les individus dont le sexe est inconnu.
+
+```{r}
+#| results: false
+resum <- penguins %>% 
+  filter(!is.na(sex)) %>% 
+  summarise(moy_L_nageoire = mean(flipper_length_mm, na.rm = TRUE),
+            var_L_nageoire = var(flipper_length_mm, na.rm = TRUE),
+            sd_L_nageoire = sd(flipper_length_mm, na.rm = TRUE),
+            se_L_nageoire = sd_L_nageoire/sqrt(n()),
+            moy_mass = mean(body_mass_g, na.rm = TRUE),
+            var_mass = var(body_mass_g, na.rm = TRUE),
+            sd_mass = sd(body_mass_g, na.rm = TRUE),
+            se_mass = sd_mass/sqrt(n()),
+            .by = c(species, sex))
+
+resum
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+penguins %>% 
+  filter(!is.na(sex)) %>% 
+  summarise(moy_L_nageoire = mean(flipper_length_mm, na.rm = TRUE),
+            var_L_nageoire = var(flipper_length_mm, na.rm = TRUE),
+            sd_L_nageoire = sd(flipper_length_mm, na.rm = TRUE),
+            se_L_nageoire = sd_L_nageoire/sqrt(n()),
+            moy_mass = mean(body_mass_g, na.rm = TRUE),
+            var_mass = var(body_mass_g, na.rm = TRUE),
+            sd_mass = sd(body_mass_g, na.rm = TRUE),
+            se_mass = sd_mass/sqrt(n()),
+            .by = c(species, sex)) %>% 
+  kableExtra::kable()
+```
+
+
+2. Vérifiez avec la fonction `skim()` que les moyennes et écart-types calculés ci-dessus sont corrects.
+
+```{r}
+penguins %>% 
+  filter(!is.na(sex)) %>% 
+  group_by(species, sex) %>% 
+  select(flipper_length_mm, body_mass_g) %>% 
+  skim()
+```
+
+
+
+3. Avec ces données synthétiques faites le graphique suivant :
+
+```{r}
+#| echo: true
+#| warning: false
+
+resum %>% 
+  ggplot(aes(x = sex, y = moy_L_nageoire)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = moy_L_nageoire - se_L_nageoire,
+                    ymax = moy_L_nageoire + se_L_nageoire),
+                width = 0.15) +
+  facet_wrap(~species) +
+  labs(x = "Sexe",
+       y = "Longueur des nageoires (mm)",
+       title = "Moyennes (et erreurs standard) des longueurs de nageoires\nchez les mâles et les femelles de trois espèces de manchots") +
+  theme_bw()
+```
+
