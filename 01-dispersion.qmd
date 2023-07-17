@@ -404,6 +404,83 @@ Indications :
 sort(unique(weather$wind_speed)) / 1.151
 ```
 
+## Les fonctions `pivot_wider()` et `pivot_longer()` {#sec-pivot}
+
+### Du format long au format large : `pivot_wider()`
+
+Comme nous venons de le voir, la fonction `pivot_wider()` permet de passer d'un tableau au format long à un tableau au format large, qui contient donc moins de lignes mais plus de colonnes.
+
+Par exemple, lorsque l'on dispose d'un tableau contenant un résumé de données pour plusieurs catégories et sous-catégories, il peut être utile de le transformer au format large pour l'intégrer dans un rapport (la présentation en est ainsi plus synthétique) ou pour faire certains types de graphiques. Par exemple, avec ce tableau de résumé de données :
+
+```{r}
+resum <- penguins %>% 
+  filter(!is.na(sex)) %>% 
+  count(species, sex)
+
+resum
+```
+
+La présentation au format large serait plus appropriée dans un compte-rendu de TP :
+
+```{r}
+resum_large1 <- resum %>% 
+  pivot_wider(names_from = sex,
+              values_from = n)
+
+resum_large1
+```
+
+L'argument `names_from` permet d'indiquer dans quelle colonne du tableau de départ aller cherche les noms de colonnes pour le nouveau tableau. Ici, on va chercher dans la colonne `sex` les noms de colonne du futur tableau (`female` et `male`). L'argument `values_from` permet d'indiquer dans quelle colonne du tableau de départ on souhaite aller chercher les valeurs que l'on souhaite mettre dans les nouvelles colonnes du futur tableau (ici, les effectifs stockés dans la colonne `n`).
+
+Le terme "tableau large" peut-être trompeur car le tableau obtenu n'a pas forcément plus de colonnes que le tableau d'origine. En tous cas, il a toujours moins de lignes que le tableau de départ. Ici, `resum` avait 6 lignes et 3 colonnes, `resum_large1` possède 3 lignes et 3 colonnes.
+
+Si on souhaite avoir les espèces en colonnes et les sexes en lignes, on peut taper ceci :
+```{r}
+resum_large2 <- resum %>% 
+  pivot_wider(names_from = species, 
+              values_from = n)
+
+resum_large2
+```
+
+Cette fois, `resum_large2` possède 2 lignes et 4 colonnes. Le caractère "large" de ce nouveau tableau est ici bien apparent. Notez bien que ce sont toujours les mêmes données qui figurent dans ces 3 objets : seule la présentation change.
+
+### Du format large au format long : `pivot_longer()`
+
+À l'inverse, on dispose parfois de données au format large alors que la plupart des fonctions graphiques et statistiques de `R` requièrent des données au format long, c'est à dire, des tableaux dans lesquels il y a une correspondance stricte entre colonnes et variables : une variable est contenue dans une seule colonne d'un tableau, et chaque ligne correspond à une unique observation. AInsi, le tableau `resum_large2` n'est pas au format long :
+
+```{r}
+resum_large2
+```
+
+En effet, 3 de ses colonnes contiennent des données d'abondances qui pourraient (ou devraient) se trouver dans une unique colonne `Abondance`, et le titre de ces 3 colonnes devrait être les catégories d'une autre variable `Espece`. Pour transformer un tableau large en tableau long (qui contient donc toujours plus de lignes, et souvent moins de colonnes), on utilise `pivot_longer()`. Cette fonction possède 3 arguments : 
+
+- `cols` : quelles sont les colonnes que l'on souhaite regrouper
+- `names_to` : comment s'appellera la variable qui contiendra les anciens noms de colonnes du tableau large
+- `values_to` : comment s'appellera la variable qui contiendra les données contenues dans les cellules du tableau large
+
+Voilà un exemple :
+
+```{r}
+resum_long <- resum_large2 %>% 
+  pivot_longer(cols = c(Adelie, Chinstrap, Gentoo),
+               names_to = "Espece",
+               values_to = "Abondance")
+
+resum_long
+```
+
+Les 3 colonnes qui contenaient les abondance des 3 espèces de manchots ont été regroupées en 2 nouvelles colonnes dont les noms ont été précisés grâce à `names_to` et `values_to`.
+
+Il est très fréquent d'avoir à passer d'un format large à un format long ou inversement. Il est donc important que vous appreniez à vous familiariser avec ces 2 fonctions.
+
+:::{.callout-important}
+## les tableaux rangés
+
+La plupart des fonctions du `tidyverse` supposent que les tableaux soient rangés (une colonne par variable, une ligne par observation) et qu'ils aient donc un format long. À l'inverse, pour présenter des tableaux dans un rapport ou pour certaines méthodes particulières, les données peuvent être présentées au format large. Les fonctions `pivot_wider()` et `pivot_longer()` sont complémentaires et permettent de passer d'un format à l'autre.
+:::
+
+
 ## Créer des résumés avec la fonction `reframe()`
 
 Comme nous venons de le voir, les calculs que nous pouvons faire grâce à la fonction `summarise()` impliquent des fonctions statistiques qui ne renvoient qu'une valeur à la fois lorsqu'on leur fournit une série de valeurs. Par exemple, si on dispose d'un vecteur numérique (les entiers compris entre 1 et 100 pour l'exemple) :
