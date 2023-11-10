@@ -96,14 +96,14 @@ La @fig-summarise2 ci-dessus indique comment travaille la fonction `summarise()`
 Ainsi, pour connaître la moyenne de la longueur du bec des manchots de l'île de Palmer, il suffit d'utiliser le tableau `penguins` du package `palmerpenguins` et sa variable `bill_length_mm` que nous avons déjà utilisée au semestre 3 :
 
 ```{r, tidy = FALSE}
-penguins %>%
+penguins |>
   summarise(moyenne = mean(bill_length_mm))
 ```
 
 La fonction `mean()` permet de calculer une moyenne. Ici, la valeur retournée est `NA` car 2 individus n'ont pas été mesurés, et le tableau contient donc des valeurs manquantes :
 
 ```{r, tidy=FALSE}
-penguins %>%
+penguins |>
   filter(is.na(bill_length_mm))
 ```
 
@@ -111,13 +111,13 @@ Pour obtenir la valeur souhaitée, il faut indiquer à `R` d'exclure les valeurs
 
 
 ```{r, tidy = FALSE}
-penguins %>%
+penguins |>
   summarise(moyenne = mean(bill_length_mm, na.rm = TRUE))
 ```
 
 
 ```{r, tidy = FALSE, include = FALSE}
-bill <- penguins %>%
+bill <- penguins |>
   summarise(moyenne = mean(bill_length_mm, na.rm = TRUE),
             ecart_type = sd(bill_length_mm, na.rm = TRUE))
 ```
@@ -127,7 +127,7 @@ La longueur moyenne du bec des manchots (toutes espèces confondues) est donc de
 De la même façon, on peut demander plusieurs calculs d'indices à la fois, par exemple la moyenne et l'écart-type (avec la fonction `sd()`) de la longueur des becs :
 
 ```{r, tidy = FALSE}
-penguins %>%
+penguins |>
   summarise(moyenne = mean(bill_length_mm, na.rm = TRUE),
             ecart_type = sd(bill_length_mm, na.rm = TRUE))
 ```
@@ -137,7 +137,7 @@ Ici, l'écart-type vaut `r round(bill[1,2],1)` millimètres.
 La fonction `summarise()` permet donc de calculer des indices statistiques variés, et permet aussi d'accéder à plusieurs variables à la fois. Par exemple. pour calculer les moyennes, médianes, minima et maxima des longueurs de nageoires et de masses corporelles, on peut procéder ainsi :
 
 ```{r}
-penguins %>% 
+penguins |> 
   summarise(moy_flip = mean(flipper_length_mm, na.rm = TRUE),
             med_flip = median(flipper_length_mm, na.rm = TRUE),
             min_flip = min(flipper_length_mm, na.rm = TRUE),
@@ -169,7 +169,7 @@ Comme son nom l'indique, l'argument `.by` permet de créer des sous-groupes dans
 Pour revenir à l'exemple de la longueur du bec des manchots, imaginons que nous souhaitions calculer les moyennes et les écart-types pour chacune des trois espèces. Voilà comment procéder :
 
 ```{r, tidy = FALSE}
-penguins %>%
+penguins |>
   summarise(moyenne = mean(bill_length_mm, na.rm = TRUE),
             ecart_type = sd(bill_length_mm, na.rm = TRUE),
             .by = species)
@@ -186,8 +186,8 @@ Là où nous avions auparavant une seule valeur de moyenne et d'écart-type pour
 Cette syntaxe très simple est presque équivalente à celle de la fonction `group_by()` :
 
 ```{r, tidy = FALSE}
-penguins %>%
-  group_by(species) %>% 
+penguins |>
+  group_by(species) |> 
   summarise(moyenne = mean(bill_length_mm, na.rm = TRUE),
             ecart_type = sd(bill_length_mm, na.rm = TRUE))
 ```
@@ -207,7 +207,7 @@ $$se \approx \frac{s}{\sqrt{n}}$$
 avec $s$, l'écart-type de l'échantillon et $n$, la taille de l'échantillon (plus d'informations sur cette statistique très importante dans la @sec-disp). Nous allons donc calculer ici ces résumés, et nous donnerons un nom au tableau créé pour pouvoir ré-utiliser ces statistiques descriptives :
 
 ```{r, tidy = FALSE}
-stats_esp <- penguins %>%
+stats_esp <- penguins |>
   summarise(moyenne = mean(bill_length_mm, na.rm = TRUE),
             ecart_type = sd(bill_length_mm, na.rm = TRUE),
             nb_obs = n(),
@@ -229,7 +229,7 @@ Vous constatez ici que nous avons 4 statistiques descriptives pour chaque espèc
 Jusqu'ici, nous avons groupé les données par espèce. Il est tout à fait possible de grouper les données par plus d'une variable, par exemple, par espèce et par sexe :
 
 ```{r, tidy = FALSE}
-stats_esp_sex <- penguins %>%
+stats_esp_sex <- penguins |>
   summarise(moyenne = mean(bill_length_mm, na.rm = TRUE),
             ecart_type = sd(bill_length_mm, na.rm = TRUE),
             nb_obs = n(),
@@ -242,8 +242,8 @@ stats_esp_sex
 En plus de la variable `species`, la tableau `stats_esp_sex` contient une variable `sex`. Les statistiques que nous avons calculées plus tôt sont maintenant disponibles pour chaque espèce et chaque sexe. D'ailleurs, puisque le sexe de certains individus est inconnu, nous avons également des lignes pour lesquelles le sexe affiché est `NA`. Pour les éliminer, il suffit de retirer les lignes du tableau pour lesquelles le sexe des individus est inconnu avant de recalculer les mêmes indices :
 
 ```{r}
-stats_esp_sex2 <- penguins %>%
-  filter(!is.na(sex)) %>% 
+stats_esp_sex2 <- penguins |>
+  filter(!is.na(sex)) |> 
   summarise(moyenne = mean(bill_length_mm, na.rm = TRUE),
             ecart_type = sd(bill_length_mm, na.rm = TRUE),
             nb_obs = n(),
@@ -258,8 +258,8 @@ Si vous ne comprenez pas la commande `filter(!is.na(sex))`, je vous encourage vi
 Enfin, lorsque nous groupons par plusieurs variables, il peut être utile de présenter les résultats sous la forme d'un tableau large (grâce à la fonction `pivot_wider()`) pour l'intégration dans un rapport par exemple. La fonction `pivot_wider()` permet de passer d'un tableau qui possède ce format :
 
 ```{r, tidy = FALSE}
-penguins %>%
-  filter(!is.na(sex)) %>% 
+penguins |>
+  filter(!is.na(sex)) |> 
   summarise(moyenne = mean(bill_length_mm, na.rm = TRUE),
             .by = c(species, sex))
 ```
@@ -267,10 +267,10 @@ penguins %>%
 à un tableau sous ce format :
 
 ```{r}
-penguins %>%
-  filter(!is.na(sex)) %>% 
+penguins |>
+  filter(!is.na(sex)) |> 
   summarise(moyenne = mean(bill_length_mm, na.rm = TRUE),
-            .by = c(species, sex)) %>% 
+            .by = c(species, sex)) |> 
   pivot_wider(names_from = sex,
               values_from = moyenne)
 ```
@@ -284,7 +284,7 @@ Il est extrêmement fréquent d'avoir à grouper des données en fonction d'une 
 
 
 ```{r}
-penguins %>% 
+penguins |> 
   summarise(effectif = n(), 
             .by = species)
 ```
@@ -292,8 +292,8 @@ penguins %>%
 ou encore :
 
 ```{r}
-penguins %>% 
-  group_by(species) %>% 
+penguins |> 
+  group_by(species) |> 
   summarise(effectif = n())
 ```
 Ces deux opérations sont tellement fréquentes (regrouper puis compter) que le package `dplyr` nous fournit un raccourci : la fonction `count()`.
@@ -301,29 +301,29 @@ Ces deux opérations sont tellement fréquentes (regrouper puis compter) que le 
 Le code ci-dessus est équivalent à celui-ci :
 
 ```{r, tidy=FALSE}
-penguins %>% 
+penguins |> 
   count(species)
 ```
 
 Notez qu'avec la fonction `count()`, la colonne qui contient les comptages s'appelle toujours `n` par défaut. Comme avec `.by` et `group_by()`, il est bien sûr possible d'utiliser `count()` avec plusieurs variables :
 
 ```{r, tidy=FALSE}
-penguins %>% 
+penguins |> 
   count(species, sex)
 ```
 
 ```{r, tidy=FALSE}
-penguins %>% 
-  filter(!is.na(sex)) %>% 
+penguins |> 
+  filter(!is.na(sex)) |> 
   count(species, sex)
 ```
 
 Et il est évidemment possible de présenter le résultats sous un format de tableau large :
 
 ```{r}
-penguins %>% 
-  filter(!is.na(sex)) %>% 
-  count(species, sex) %>% 
+penguins |> 
+  filter(!is.na(sex)) |> 
+  count(species, sex) |> 
   pivot_wider(names_from = sex,
               values_from = n)
 ```
@@ -347,7 +347,7 @@ Et la liste n'est bien sûr pas exhaustive
 1. Avec le tableau `diamonds` du package `ggplot2`, faites un tableau indiquant combien de diamants de chaque couleur on dispose. Vous devriez obtenir le tableau suivant :
 
 ```{r, tidy=FALSE, echo=FALSE}
-diamonds %>% 
+diamonds |> 
   count(color)
 ```
 
@@ -357,7 +357,7 @@ diamonds %>%
 3. À partir du tableau `weather` faites un tableau indiquant les vitesses de vents minimales, maximales et moyennes, enregistrées chaque mois dans chaque aéroport de New York. Indice : les 3 aéroports de New York sont Newark, LaGuardia Airport et John F. Kennedy, notés respectivement `EWR`, `LGA` et `JFK` dans la variable `origin`. Votre tableau devrait ressembler à ceci :
 
 ```{r, tidy=FALSE, echo=FALSE}
-windy <- weather %>%
+windy <- weather |>
   summarise(max_wind = max(wind_speed, na.rm = TRUE),
             min_wind = min(wind_speed, na.rm = TRUE),
             moy_wind = mean(wind_speed, na.rm = TRUE),
@@ -368,8 +368,8 @@ windy
 4. Sachant que les vitesses du vent sont exprimées en miles par heure, certaines valeurs sont-elles surprenantes ? À l'aide de la fonction `filter()`, éliminez la ou les valeurs aberrantes. Vous devriez obtenir ce tableau :
 
 ```{r, tidy=FALSE, echo=FALSE}
-windy2 <- weather %>%
-  filter(wind_speed <= 500) %>%
+windy2 <- weather |>
+  filter(wind_speed <= 500) |>
   summarise(max_wind = max(wind_speed, na.rm = TRUE),
             min_wind = min(wind_speed, na.rm = TRUE),
             moy_wind = mean(wind_speed, na.rm = TRUE),
@@ -380,8 +380,8 @@ windy2
 5. En utilisant les données de vitesse de vent du tableau `weather`, produisez le graphique suivant :
 
 ```{r windspeed, tidy=FALSE, warning = FALSE, echo = FALSE}
-weather %>%
-  filter(wind_speed < 500) %>%
+weather |>
+  filter(wind_speed < 500) |>
   ggplot(aes(x = factor(month), y = wind_speed)) +
   geom_jitter(width = 0.2, height = 0, alpha = 0.2) +
   labs(x = "Mois",
@@ -413,8 +413,8 @@ Comme nous venons de le voir, la fonction `pivot_wider()` permet de passer d'un 
 Par exemple, lorsque l'on dispose d'un tableau contenant un résumé de données pour plusieurs catégories et sous-catégories, il peut être utile de le transformer au format large pour l'intégrer dans un rapport (la présentation en est ainsi plus synthétique) ou pour faire certains types de graphiques. Par exemple, avec ce tableau de résumé de données :
 
 ```{r}
-resum <- penguins %>% 
-  filter(!is.na(sex)) %>% 
+resum <- penguins |> 
+  filter(!is.na(sex)) |> 
   count(species, sex)
 
 resum
@@ -423,7 +423,7 @@ resum
 La présentation au format large serait plus appropriée dans un compte-rendu de TP :
 
 ```{r}
-resum_large1 <- resum %>% 
+resum_large1 <- resum |> 
   pivot_wider(names_from = sex,
               values_from = n)
 
@@ -436,7 +436,7 @@ Le terme "tableau large" peut-être trompeur car le tableau obtenu n'a pas forc�
 
 Si on souhaite avoir les espèces en colonnes et les sexes en lignes, on peut taper ceci :
 ```{r}
-resum_large2 <- resum %>% 
+resum_large2 <- resum |> 
   pivot_wider(names_from = species, 
               values_from = n)
 
@@ -462,7 +462,7 @@ En effet, 3 de ses colonnes contiennent des données d'abondances qui pourraient
 Voilà un exemple :
 
 ```{r}
-resum_long <- resum_large2 %>% 
+resum_long <- resum_large2 |> 
   pivot_longer(cols = c(Adelie, Chinstrap, Gentoo),
                names_to = "Espece",
                values_to = "Abondance")
@@ -505,9 +505,9 @@ median(1:100)
 Il existe toutefois des fonctions qui renvoient plus d'une valeur à la fois. Par exemple, la fonction `quantile()`, renvoie par défaut 5 éléments :
 
 1. la valeur minimale contenue dans le vecteur (ou quantile 0%) : c'est la valeur la plus faible contenue dans la série de données
-2. le premier quartile du vecteur (Q1 ou quantile 25%) : c'est la valeur coupant l'échantillon en deux telle que 25% des observations du vecteur y sont inférieures
-3. la médiane du vecteur (Q2 ou quantile 50%) : c'est la valeur coupant l'échantillon en deux telle que 50% des observations du vecteur sont inférieures à cette valeur et 50% y sont supérieures
-4. le troisième quartile du vecteur (Q3 ou quantile 75%) : c'est la valeur coupant l'échantillon en deux telle que 75% des observations du vecteur y sont inférieures
+2. le premier quartile du vecteur (Q1 ou quantile 25%) est la valeur coupant l'échantillon en deux : 25% des observations du vecteur y sont inférieures et 75% y sont supérieures
+3. la médiane du vecteur (Q2 ou quantile 50%) est la valeur coupant l'échantillon en deux : 50% des observations du vecteur sont inférieures à cette valeur et 50% y sont supérieures
+4. le troisième quartile du vecteur (Q3 ou quantile 75%) est la valeur coupant l'échantillon en deux : 75% des observations du vecteur y sont inférieures et 25% y sont supérieures
 5. la valeur maximale contenue dans le vecteur (ou quantile 100%) : c'est la valeur la plus élevée contenue dans la série de données.
 
 Par exemple, toujours avec le vecteur des entiers contenus entre 1 et 100 :
@@ -522,11 +522,11 @@ L'objet obtenu est un vecteur dont chaque élément porte un nom. Pour transform
 enframe(quantile(1:100))
 ```
 
-Il peut être très utile de calculer ces différentes valeurs pour plusieurs variables à la fois, ou pour plusieurs sous-groupes d'un jeu de données. Le problème est que nous ne pouvons pas utiliser `summarise()` car la fonction `quantile()` ne renvoie pas qu'une unique valeur. par exemple, pour calculer les quantiles des longueurs de becs pour chaque espèce de manchots, on pourrait être tenté de taper ceci :
+Il peut être très utile de calculer ces différentes valeurs pour plusieurs variables à la fois, ou pour plusieurs sous-groupes d'un jeu de données. Le problème est que nous ne pouvons pas utiliser `summarise()` car la fonction `quantile()` ne renvoie pas qu'une unique valeur. Par exemple, pour calculer les quantiles des longueurs de becs pour chaque espèce de manchots, on pourrait être tenté de taper ceci :
 
 ```{r}
 #| error: true
-penguins %>% 
+penguins |> 
   summarise(Indices = quantile(bill_length_mm, na.rm = TRUE), 
             .by = species)
 ```
@@ -534,7 +534,7 @@ penguins %>%
 C'est dans ces situations que la fonction `reframe()` est utile. Elle joue le même rôle que `summarise()`, mais dans les situation où les fonctions statistiques renvoient plus d'une valeur à la fois :
 
 ```{r}
-penguins %>% 
+penguins |> 
   reframe(Indices = quantile(bill_length_mm, na.rm = TRUE), 
           .by = species)
 ```
@@ -542,7 +542,7 @@ penguins %>%
 Au contraire de `summarise()`, `reframe()` ne renvoie pas de message d'avertissement dans cette situation. Dans cet exemple, on ne sait malheureusement pas à quoi correspondent les chiffres renvoyés puisque l'information des quartiles a disparu (quelles valeurs correspondent aux médianes ou aux premiers quartiles par exemple). Pour y remédier, on doit transformer le vecteur renvoyé par `quantile()` en tibble. Nous avons déjà vu comment le faire grâce à la fonction `enframe()`. Par ailleurs, puisque la fonction va maintenant renvoyer un tableau, on n'a pas besoin de lui fournir de nom de colonnes (je retire donc `Indices = ` de mon code) :
 
 ```{r}
-penguins %>% 
+penguins |> 
   reframe(enframe(quantile(bill_length_mm, na.rm = TRUE)), 
           .by = species)
 ```
@@ -550,17 +550,17 @@ penguins %>%
 Enfin, comme précédemment, il est possible de modifier la forme de ce tableau (avec `pivot_wider()`) pour le lire plus facilement et éventuellement l'intégrer dans un rapport ou compte-rendu :
 
 ```{r}
-penguins %>%
+penguins |>
   reframe(enframe(quantile(bill_length_mm, na.rm = TRUE)), 
-          .by = species) %>% 
+          .by = species) |> 
   pivot_wider(names_from = species,
               values_from = value)
 ```
 
-Ces statistiques nous permettent de constater que les manchots de l'espèce Adélie semblent avoir des becs plus courts que les 2 autres espèces (les 5 quantiles le confirment). Les manchots Gentoo et Chinstrap ont en revanche des becs de longueur à peu près similaires, ben que ceux des Chinstrap soient peut-être très légèrement plus longs (Q1, médiane et Q3 supérieurs à ceux des Gentoo). On peut vérifier tout ça graphiquement avec des boîtes à moustaches :
+Ces statistiques nous permettent de constater que les manchots de l'espèce Adélie semblent avoir des becs plus courts que les 2 autres espèces (les 5 quantiles le confirment). Les manchots Gentoo et Chinstrap ont en revanche des becs de longueur à peu près similaires, bien que ceux des Chinstrap soient peut-être très légèrement plus longs (Q1, médiane et Q3 supérieurs à ceux des Gentoo). On peut vérifier tout ça graphiquement avec des boîtes à moustaches :
 
 ```{r}
-penguins %>% 
+penguins |> 
   ggplot(aes(x = species, y = bill_length_mm)) +
   geom_boxplot() +
   labs(x = "Espèce", y = "Longueur du bec (mm)") +
@@ -570,7 +570,7 @@ penguins %>%
 Ou avec un graphique de densité :
 
 ```{r}
-penguins %>% 
+penguins |> 
   ggplot(aes(x = bill_length_mm, fill = species)) +
   geom_density(alpha = 0.5, show.legend = FALSE) +
   geom_rug() +
@@ -643,7 +643,7 @@ Les différents indices statistiques fournis nous renseignent à la fois sur la 
 #| fig-align: center
 #| label: fig-distri-masses
 
-penguins %>% 
+penguins |> 
   ggplot(aes(body_mass_g)) +
   geom_histogram(bins = 25, fill = "steelblue", color = "grey20", alpha = 0.7) +
   geom_vline(xintercept = mean(penguins$body_mass_g, na.rm = TRUE), 
@@ -653,11 +653,11 @@ penguins %>%
   labs(x = "Masse (g)", y = "Nombre") +
   theme_bw()
 ```
-L'histogramme de la @fig-distri-masses montre la distribution de la taille des manchots (toutes espèces confondues). Cette distribution présente une asymétrie à droite. Cela signifie que la distribution n'est pas symétrique et que la "queue de distribution" est plus longue à droite qu'à gauche. La plupart des individus ont une masse comprise entre 3500 et 3700 grammes, au niveau du pic principal du graphique. La médiane, en orange et qui vaut 4050 grammes est plus proche du pic que la moyenne, en rouge, qui vaut 4202 grammes. Ici, la différence entre moyenne et médiane n'est pas énorme, mais elle peut le devenir si la distribution est vraiment très asymétrique, par exemple, si quelques individus seulement avaient une masse supérieure à 7000 grammes, la moyenne serait tirée vers la droite du graphique alors que la médiane ne serait presque pas affectée. la moyenne représenterait alors encore moins fidèlement la tendance centrale.
+L'histogramme de la @fig-distri-masses montre la distribution de la taille des manchots (toutes espèces confondues). Cette distribution présente une asymétrie à droite. Cela signifie que la distribution n'est pas symétrique et que la "queue de distribution" est plus longue à droite qu'à gauche. La plupart des individus ont une masse comprise entre 3500 et 3700 grammes, au niveau du pic principal du graphique. La médiane, en orange et qui vaut 4050 grammes est plus proche du pic que la moyenne, en rouge, qui vaut 4202 grammes. Ici, la différence entre moyenne et médiane n'est pas énorme, mais elle peut le devenir si la distribution est vraiment très asymétrique, par exemple, si quelques individus seulement avaient une masse supérieure à 7000 grammes, la moyenne serait tirée vers la droite du graphique alors que la médiane ne serait presque pas affectée. La moyenne représenterait alors encore moins fidèlement la tendance centrale.
 
 Si l'on revient à la fonction `summary()`, observer des valeurs proches pour la moyenne et la médiane nous indique donc le degré de symétrie de la distribution.
 
-- La *dispersion* des données nous renseigne sur la dispersion des points autour des indices de position. Les quartiles et les valeurs minimales et maximales renvoyées par la fonction `summary()` nous renseignent sur l'étalement des points. Les valeurs situées entre le premier et le troisième quartile correspondent aux 50% des valeurs de l'échantillon les plus centrales. Plus l'étendue entre ces quartiles (notée IQR pour "intervalle interquartile") sera grande, plus la dispersion sera importante. D'ailleurs, lorsque la dispersion est très importante, les moyennes et médianes ne renseignent que très moyennement sur le tendance centrale. Les indices de position sont surtout pertinents lorsque la dispersion des points autour de cette tendance centrale n'est pas trop large. Par exemple, si la distribution des données ressemblait à ceci (@fig-distri-masses2), la moyenne et la médiane seraient fort peu utiles car très éloignées de la plupart des observations :
+- La *dispersion* des données nous renseigne sur la dispersion des points autour des indices de position. Les quartiles et les valeurs minimales et maximales renvoyées par la fonction `summary()` nous renseignent sur l'étalement des points. Les valeurs situées entre le premier et le troisième quartile correspondent aux 50% des valeurs de l'échantillon les plus centrales. Plus l'étendue entre ces quartiles (notée IQR pour "intervalle interquartile") sera grande, plus la dispersion sera importante. D'ailleurs, lorsque la dispersion est très importante, les moyennes et médianes ne renseignent que très moyennement sur la tendance centrale. Les indices de position sont surtout pertinents lorsque la dispersion des points autour de cette tendance centrale n'est pas trop large. Par exemple, si la distribution des données ressemblait à ceci (@fig-distri-masses2), la moyenne et la médiane seraient fort peu utiles car très éloignées de la plupart des observations :
 
 ```{r}
 #| echo: false
@@ -669,7 +669,7 @@ Si l'on revient à la fonction `summary()`, observer des valeurs proches pour la
 set.seed(54)
 tmp <- tibble(a = c(rnorm(150, 3500, 300), rnorm(150, 5000, 300))) 
 
-tmp %>% 
+tmp |> 
   ggplot(aes(a)) +
   geom_histogram(bins = 25, fill = "steelblue", color = "grey20", alpha = 0.7) +
   geom_vline(xintercept = mean(tmp$a, na.rm = TRUE), 
@@ -680,10 +680,10 @@ tmp %>%
   theme_bw()
 ```
 
-On comprend donc l'importance de considérer les indices de dispersion en plus des indices de position pour caractériser et comprendre une série de données numériques. L'intervalle interquartile est toujours utile pour connaître l'étendue des données qui correspond aux 50% des observations les plus centrales. Les autres indices de dispersion très fréquemment utilisés, mais qui ne sont pas proposés par défaut par la fonction `summary()`, sont la variance et l'écart-type. Il est possible de calculer tous les indices renvoyés par la fonction `summary()` et ceux qui nous manquent grâce à la fonction `summarise()` :
+On comprend donc l'importance de considérer les indices de dispersion en plus des indices de position pour caractériser et comprendre une série de données numériques. L'intervalle interquartile est toujours utile pour connaître l'étendue des données qui correspondent aux 50% des observations les plus centrales. Les autres indices de dispersion très fréquemment utilisés, mais qui ne sont pas proposés par défaut par la fonction `summary()`, sont la variance et l'écart-type. Il est possible de calculer tous les indices renvoyés par la fonction `summary()` et ceux qui nous manquent grâce à la fonction `summarise()` :
 
 ```{r}
-penguins %>% 
+penguins |> 
   summarise(min = min(body_mass_g, na.rm = TRUE),
             Q1 = quantile(body_mass_g, 0.25, na.rm = TRUE),
             med = median(body_mass_g, na.rm = TRUE),
@@ -731,7 +731,7 @@ summary(penguins$sex)
 Pour les facteurs, la fonction `summary()` est donc tout à fait équivalente à la fonction `count()` :
 
 ```{r}
-penguins %>% 
+penguins |> 
   count(species)
 ```
 
@@ -750,8 +750,8 @@ Ici, on obtient un résumé pour chaque colonne du tableau. Les colonnes numéri
 On constate au passage que la variable `year` est considérée ici comme une variable numérique, alors qu'elle devrait plutôt être considérée comme un facteur, ce qui nous permettrait de savoir combien d'individus ont été échantillonnés chaque année :
 
 ```{r}
-penguins %>% 
-  mutate(year = factor(year)) %>% 
+penguins |> 
+  mutate(year = factor(year)) |> 
   summary()
 ```
 
@@ -775,7 +775,7 @@ Les résultats obtenus grâce à cette fonction sont nombreux. La première sect
 - la nature des variables qu'il contient (ici 3 facteurs et 5 variables numériques)
 - la présence de variables utilisées pour faire des regroupements (il n'y en a pas encore à ce stade)
 
-Ensuite, un bloc apporte des information sur chaque facteur présent dans le tableau :
+Ensuite, un bloc apporte des informations sur chaque facteur présent dans le tableau :
 
 - le nom de la variable catégorielle (`skim_variable`)
 - le nombre de données manquantes (`n_missing`) et le taux de "données complètes" (`complete_rate`)
@@ -799,11 +799,11 @@ Là encore, en un coup d'œil, on dispose donc de toutes les informations pertin
 La fonction `skim()`, déjà très pratique, le devient encore plus lorsque l'on choisit de lui fournir seulement certaines variables, et qu'on fait certains regroupements. Par exemple, on peut sélectionner les variables relatives aux dimensions du bec (`bill_length_mm` et `bill_depth_mm`) avec la fonction `select()` que nous connaissons déjà, et demander un résumé des données pour chaque espèce grâce à la fonction `group_by()` que nous connaissons également :
 
 ```{r}
-penguins %>%                     # Avec le tableau penguins...
+penguins |>                     # Avec le tableau penguins...
   select(species, 
          bill_length_mm,
-         bill_depth_mm) %>%      # Je sélectionne les variables d'intérêt...
-  group_by(species) %>%          # Je regroupe par espèce...
+         bill_depth_mm) |>      # Je sélectionne les variables d'intérêt...
+  group_by(species) |>          # Je regroupe par espèce...
   skim()                         # Et je produis un résumé des données
 ```
 
@@ -827,19 +827,19 @@ En utilisant les fonctions de résumé abordées jusqu'ici et le tableau `weathe
 
 ```{r}
 #| include: false
-weather %>% 
-  filter(wind_speed < 500) %>% 
-  select(origin, precip, wind_speed, wind_gust) %>% 
-  group_by(origin) %>% 
+weather |> 
+  filter(wind_speed < 500) |> 
+  select(origin, precip, wind_speed, wind_gust) |> 
+  group_by(origin) |> 
   skim()
 ```
 
 ```{r}
 #| include: false
-weather %>% 
-  filter(wind_speed < 500) %>% 
-  select(temp, month) %>% 
-  group_by(month) %>% 
+weather |> 
+  filter(wind_speed < 500) |> 
+  select(temp, month) |> 
+  group_by(month) |> 
   skim()
 ```
 

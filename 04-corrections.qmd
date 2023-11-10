@@ -23,7 +23,7 @@ library(nycflights13)
 1. Avec le tableau `diamonds` du package `ggplot2`, faites un tableau indiquant combien de diamants de chaque couleur on dispose.
 
 ```{r, tidy=FALSE, echo=TRUE}
-diamonds %>% 
+diamonds |> 
   count(color)
 ```
 
@@ -40,7 +40,7 @@ weather
 3. À partir du tableau `weather` faites un tableau indiquant les vitesses de vents minimales, maximales et moyennes, enregistrées chaque mois dans chaque aéroport de New York. Indice : les 3 aéroports de New York sont Newark, LaGuardia Airport et John F. Kennedy, notés respectivement `EWR`, `LGA` et `JFK` dans la variable `origin`. 
 
 ```{r, tidy=FALSE, echo=TRUE}
-windy <- weather %>%
+windy <- weather |>
   summarise(max_wind = max(wind_speed, na.rm = TRUE),
             min_wind = min(wind_speed, na.rm = TRUE),
             moy_wind = mean(wind_speed, na.rm = TRUE),
@@ -53,7 +53,7 @@ windy
 Oui, les vitesses de vent supérieures à 100 mph devraient être rares :
 
 ```{r}
-windy %>% 
+windy |> 
   filter(max_wind > 100)
 ```
 
@@ -61,8 +61,8 @@ Ici, 1048 mph est impossible. Il s'agit soit d'un dysfonctionnement de l'apparei
 
 
 ```{r}
-windy2 <- weather %>%
-  filter(wind_speed <= 500) %>%
+windy2 <- weather |>
+  filter(wind_speed <= 500) |>
   summarise(max_wind = max(wind_speed, na.rm = TRUE),
             min_wind = min(wind_speed, na.rm = TRUE),
             moy_wind = mean(wind_speed, na.rm = TRUE),
@@ -73,8 +73,8 @@ windy2
 5. En utilisant les données de vitesse de vent du tableau `weather`, produisez le graphique suivant :
 
 ```{r windspeed, tidy=FALSE, warning = FALSE, echo = TRUE}
-weather %>%
-  filter(wind_speed < 500) %>%
+weather |>
+  filter(wind_speed < 500) |>
   ggplot(aes(x = factor(month), y = wind_speed)) +
   geom_jitter(width = 0.2, height = 0, alpha = 0.2) +
   labs(x = "Mois",
@@ -107,37 +107,37 @@ En utilisant les fonctions de résumé abordées jusqu'ici et le tableau `weathe
 
 ```{r}
 #| include: false
-weather %>% 
-  filter(wind_speed < 500) %>% 
-  select(origin, precip, wind_speed, wind_gust) %>% 
-  group_by(origin) %>% 
+weather |> 
+  filter(wind_speed < 500) |> 
+  select(origin, precip, wind_speed, wind_gust) |> 
+  group_by(origin) |> 
   skim()
 ```
 
 ```{r}
 #| include: false
-weather %>% 
-  filter(wind_speed < 500) %>% 
-  select(temp, month) %>% 
-  group_by(month) %>% 
+weather |> 
+  filter(wind_speed < 500) |> 
+  select(temp, month) |> 
+  group_by(month) |> 
   skim()
 ```
 
 1. Dans quel aéroport de New York les précipitations moyennes ont-elle été les plus fortes en 2013 ?
 
 ```{r}
-weather %>% 
-  summarise(precip_moyenne = mean(precip), .by = origin) %>% 
+weather |> 
+  summarise(precip_moyenne = mean(precip), .by = origin) |> 
   arrange(desc(precip_moyenne))
 ```
 
 Les précipitations horaires moyennes les plus fortes sont enregistrées dans l'aéroport EWR (Newark). Si on s'intéresse plutôt aux précipitations mensuelles :
 
 ```{r}
-weather %>% 
-  group_by(origin, month) %>% 
-  summarise(precip_tot = sum(precip)) %>%       # Cumul de précipitation chaque mois et dans chaqe aéroport
-  summarise(precip_moy = mean(precip_tot)) %>%  # Calcul des moyennes mensuelles pour chaque aeroport 
+weather |> 
+  group_by(origin, month) |> 
+  summarise(precip_tot = sum(precip)) |>       # Cumul de précipitation chaque mois et dans chaqe aéroport
+  summarise(precip_moy = mean(precip_tot)) |>  # Calcul des moyennes mensuelles pour chaque aeroport 
   arrange(desc(precip_moy))                     # Tri par ordre décroissant de précipitations moyennes
 ```
 
@@ -146,9 +146,9 @@ Logiquement, c'est toujours dans l'aéroport de Newark que les précipitations m
 2. Dans quel aéroport de New York la vitesse du vent moyenne était-elle la plus forte en 2013 ? Quelle est cette vitesse ?
 
 ```{r}
-weather %>% 
+weather |> 
   summarise(wind_moyenne = mean(wind_speed, na.rm = TRUE),
-            .by = origin) %>% 
+            .by = origin) |> 
   arrange(desc(wind_moyenne))
 ```
 
@@ -157,18 +157,18 @@ Le vent moyen le plus fort est observé à JFK, et vaut 11.5 miles à l'heure. A
 3. Dans quel aéroport de New York les rafales de vent étaient-elles les plus variables en 2013 ? Quel indice statistique vous donne cette information et quelle est sa valeur ?
 
 ```{r}
-weather %>% 
+weather |> 
   summarise(rafales_var = var(wind_gust, na.rm = TRUE),
-            .by = origin) %>% 
+            .by = origin) |> 
   arrange(desc(rafales_var))
 ```
 
 C'est à l'aéroport JFK que les rafales de vent étaient les plus variables en 2013. La variance de 37.5 mph$^2$ nous renseigne sur cette variabilité. Une autre façon d'arriver à cette même conclusion consiste à utiliser la fonction `skim()` sur la variable `wind_gust` et les données groupées par aéroport (variable `origin`) :
 
 ```{r}
-weather %>% 
-  select(origin, wind_gust) %>% 
-  group_by(origin) %>% 
+weather |> 
+  select(origin, wind_gust) |> 
+  group_by(origin) |> 
   skim()
 ```
 
@@ -178,7 +178,7 @@ Ici, c'est l'indice noté `sd` qui nous renseigne. Il s'agit de l'écart-type qu
 
 ```{r}
 #| fig-asp: 1
-weather %>% 
+weather |> 
   ggplot(aes(x = precip, fill = origin)) +
   geom_histogram(alpha = 0.5, show.legend = FALSE) +
   geom_rug() +
@@ -189,8 +189,8 @@ La distribution des précipitations est très clairement asymétrique, avec un t
 
 ```{r}
 #| fig-asp: 1
-weather %>% 
-  filter(precip > 0 ) %>% 
+weather |> 
+  filter(precip > 0 ) |> 
   ggplot(aes(x = precip, fill = origin)) +
   geom_histogram(alpha = 0.5, show.legend = FALSE) +
   geom_rug() +
@@ -200,21 +200,21 @@ weather %>%
 5. Quelle est la température médiane observée en 2013 tous aéroports confondus ?
 
 ```{r}
-weather %>% 
+weather |> 
   summarise(temo_med = median(temp, na.rm = TRUE))
 ```
 
-La température médiane, tous aéroports confondue, observée en 2013, vaut `r weather %>%   summarise(temo_med = median(temp, na.rm = TRUE))` degrés Fahrenheit.
+La température médiane, tous aéroports confondue, observée en 2013, vaut `r weather |>   summarise(temo_med = median(temp, na.rm = TRUE))` degrés Fahrenheit.
 
 6. Tous aéroports confondus, quel est le mois de l'année où la température a été la plus variable en 2013 ? Quelles étaient les températures minimales et maximales observées ce mois-là ?
 
 ```{r}
-weather %>% 
-  group_by(month) %>% 
+weather |> 
+  group_by(month) |> 
   summarise(temp_var = var(temp, na.rm = TRUE),
             temp_sd  = sd(temp, na.rm = TRUE),
             temp_min = min(temp, na.rm = TRUE),
-            temp_max = max(temp, na.rm = TRUE)) %>% 
+            temp_max = max(temp, na.rm = TRUE)) |> 
   arrange(desc(temp_var))
 ```
 
@@ -238,8 +238,8 @@ Attention : pensez à retirer les individus dont le sexe est inconnu.
 
 ```{r}
 #| results: false
-resum <- penguins %>% 
-  filter(!is.na(sex)) %>% 
+resum <- penguins |> 
+  filter(!is.na(sex)) |> 
   summarise(moy_L_nageoire = mean(flipper_length_mm, na.rm = TRUE),
             var_L_nageoire = var(flipper_length_mm, na.rm = TRUE),
             sd_L_nageoire = sd(flipper_length_mm, na.rm = TRUE),
@@ -257,8 +257,8 @@ resum
 #| echo: false
 #| message: false
 #| warning: false
-penguins %>% 
-  filter(!is.na(sex)) %>% 
+penguins |> 
+  filter(!is.na(sex)) |> 
   summarise(moy_L_nageoire = mean(flipper_length_mm, na.rm = TRUE),
             var_L_nageoire = var(flipper_length_mm, na.rm = TRUE),
             sd_L_nageoire = sd(flipper_length_mm, na.rm = TRUE),
@@ -267,7 +267,7 @@ penguins %>%
             var_mass = var(body_mass_g, na.rm = TRUE),
             sd_mass = sd(body_mass_g, na.rm = TRUE),
             se_mass = sd_mass/sqrt(n()),
-            .by = c(species, sex)) %>% 
+            .by = c(species, sex)) |> 
   print(width = Inf)
 ```
 
@@ -275,10 +275,10 @@ penguins %>%
 2. Vérifiez avec la fonction `skim()` que les moyennes et écart-types calculés ci-dessus sont corrects.
 
 ```{r}
-penguins %>% 
-  filter(!is.na(sex)) %>% 
-  group_by(species, sex) %>% 
-  select(flipper_length_mm, body_mass_g) %>% 
+penguins |> 
+  filter(!is.na(sex)) |> 
+  group_by(species, sex) |> 
+  select(flipper_length_mm, body_mass_g) |> 
   skim()
 ```
 
@@ -290,7 +290,7 @@ penguins %>%
 #| echo: true
 #| warning: false
 
-resum %>% 
+resum |> 
   ggplot(aes(x = sex, y = moy_L_nageoire)) +
   geom_point() +
   geom_errorbar(aes(ymin = moy_L_nageoire - se_L_nageoire,
