@@ -50,7 +50,7 @@ Comme nous l'avons vu au semestre 3, le package `dplyr` fournit plusieurs foncti
 - `select()` : pour sélectionner ou exclure certaines colonnes (variables) d'un tableau de données
 - `filter()` : pour trier des lignes d'un tableau de données selon des critères ou conditions choisis par l'utilisateur
 - `mutate()` : pour transformer des variables existantes, ou pour créer de nouvelles colonnes dans un tableau de données
-- `arrange()` : pour trier des tableaux de données par ordre croissants ou décroissants
+- `arrange()` : pour trier des tableaux de données par ordre croissant ou décroissant
 
 Si vous ne savez plus comment utiliser ces fonctions, relisez [le chapitre 4 du livre en ligne de Biométrie du semestre 3](https://besibo.github.io/BiometrieS3/04-DataWrangling.html).
 
@@ -148,7 +148,7 @@ penguins |>
             max_mass = max(body_mass_g, na.rm = TRUE))
 ```
 
-La fonction `summarise()` est donc très utile pour produire des résumés informatifs des données, mais nos exemples ne sont ici pas très pertinents puisque nous avons jusqu'ici calculé des indices sans distinguer les espèces. Si les 3 espèces de manchots ont des caractéristiques très différentes, calculer des moyennes toutes espèces confondues n'a pas de sens. Voyons maintenant comment obtenir ces même indices pour chaque espèce.
+La fonction `summarise()` est donc très utile pour produire des résumés informatifs des données, mais nos exemples ne sont ici pas très pertinents puisque nous avons jusqu'ici calculé des indices sans distinguer les espèces. Si les trois espèces de manchots ont des caractéristiques très différentes, calculer des moyennes toutes espèces confondues n'a pas de sens. Voyons maintenant comment obtenir ces mêmes indices pour chaque espèce.
 
 ### Intérêt de l'argument `.by`
 
@@ -275,7 +275,7 @@ penguins |>
               values_from = moyenne)
 ```
 
-Sous cette forme, les données ne sont plus "rangées", c'est à dire que nous n'avons plus une observation par ligne et une variable par colonne. En effet ici, la variable `sex` est maintenant "étalée" dans 2 colonnes distinctes : chaque modalité du facteur de départ (`female` et `male`) est utilisée en tant que titre de nouvelles colonnes, et la variable `moyenne` est répartie dans deux colonnes. Ce format de tableau n'est pas idéal pour les statistiques ou les représentations graphiques, mais il est plus synthétique, et donc plus facile à inclure dans un rapport ou un compte-rendu.
+Sous cette forme, les données ne sont plus "rangées", c'est-à-dire que nous n'avons plus une observation par ligne et une variable par colonne. En effet, ici, la variable `sex` est maintenant "étalée" dans 2 colonnes distinctes : chaque modalité du facteur de départ (`female` et `male`) est utilisée en tant que titre de nouvelles colonnes, et la variable `moyenne` est répartie dans deux colonnes. Ce format de tableau n'est pas idéal pour les statistiques ou les représentations graphiques, mais il est plus synthétique, et donc plus facile à inclure dans un rapport ou un compte-rendu.
 
 
 ### Un raccourci pratique pour compter des effectifs {#sec-count}
@@ -318,7 +318,7 @@ penguins |>
   count(species, sex)
 ```
 
-Et il est évidemment possible de présenter le résultats sous un format de tableau large :
+Et il est évidemment possible de présenter les résultats sous un format de tableau large :
 
 ```{r}
 penguins |> 
@@ -328,7 +328,7 @@ penguins |>
               values_from = n)
 ```
 
-Vous connaissez maintenant plusieurs méthodes pour calculer à la main des statistiques descriptives pour des variables entières, ou pour des sous-groupes de lignes (par espèce, par sexe, par sexe et par espèce...). Globalement, toutes les fonctions de R qui prennent une série de chiffres en guise d'argument, et qui renvoient une valeur unique, peuvent être utilisées avec la fonction `summarise()`. En particulier, vous pouvez utiliser les fonctions suivantes pour faire des analyses exploratoires :
+Vous connaissez maintenant plusieurs méthodes pour calculer à la main des statistiques descriptives pour des variables entières, ou pour des sous-groupes de lignes (par espèce, par sexe, par espèce et sexe...). Globalement, toutes les fonctions de R qui prennent une série de chiffres en guise d'argument, et qui renvoient une valeur unique, peuvent être utilisées avec la fonction `summarise()`. En particulier, vous pouvez utiliser les fonctions suivantes pour faire des analyses exploratoires :
 
 - `mean()` : calcul de la moyenne
 - `median()` : calcul de la médiane
@@ -340,7 +340,7 @@ Vous connaissez maintenant plusieurs méthodes pour calculer à la main des stat
 - `sd()` : calcul de l'écart-type
 - `IQR()` : calcul de l'intervalle inter-quartiles
 
-Et la liste n'est bien sûr pas exhaustive
+Et la liste n'est bien sûr pas exhaustive.
 
 ### Exercices {#sec-exo10}
 
@@ -430,7 +430,7 @@ resum_large1 <- resum |>
 resum_large1
 ```
 
-L'argument `names_from` permet d'indiquer dans quelle colonne du tableau de départ aller cherche les noms de colonnes pour le nouveau tableau. Ici, on va chercher dans la colonne `sex` les noms de colonne du futur tableau (`female` et `male`). L'argument `values_from` permet d'indiquer dans quelle colonne du tableau de départ on souhaite aller chercher les valeurs que l'on souhaite mettre dans les nouvelles colonnes du futur tableau (ici, les effectifs stockés dans la colonne `n`).
+L'argument `names_from` permet d'indiquer dans quelle colonne du tableau de départ aller cherche les **noms de colonnes** pour le nouveau tableau. Ici, on va chercher dans la colonne `sex` les noms des colonnes du futur tableau (`female` et `male`). L'argument `values_from` permet d'indiquer dans quelle colonne du tableau de départ on souhaite aller chercher **les valeurs** que l'on souhaite mettre dans les nouvelles colonnes du futur tableau (ici, les effectifs stockés dans la colonne `n`).
 
 Le terme "tableau large" peut-être trompeur car le tableau obtenu n'a pas forcément plus de colonnes que le tableau d'origine. En tous cas, il a toujours moins de lignes que le tableau de départ. Ici, `resum` avait 6 lignes et 3 colonnes, `resum_large1` possède 3 lignes et 3 colonnes.
 
@@ -447,7 +447,7 @@ Cette fois, `resum_large2` possède 2 lignes et 4 colonnes. Le caractère "large
 
 ### Du format large au format long : `pivot_longer()`
 
-À l'inverse, on dispose parfois de données au format large alors que la plupart des fonctions graphiques et statistiques de `R` requièrent des données au format long, c'est à dire, des tableaux dans lesquels il y a une correspondance stricte entre colonnes et variables : une variable est contenue dans une seule colonne d'un tableau, et chaque ligne correspond à une unique observation. AInsi, le tableau `resum_large2` n'est pas au format long :
+À l'inverse, on dispose parfois de données au format large alors que la plupart des fonctions graphiques et statistiques de `R` requièrent des données au format long, c'est-à-dire, des tableaux dans lesquels il y a une correspondance stricte entre colonnes et variables : une variable est contenue dans une seule colonne d'un tableau, et chaque ligne correspond à une unique observation. Ainsi, le tableau `resum_large2` n'est pas au format long :
 
 ```{r}
 resum_large2
@@ -560,6 +560,8 @@ penguins |>
 Ces statistiques nous permettent de constater que les manchots de l'espèce Adélie semblent avoir des becs plus courts que les 2 autres espèces (les 5 quantiles le confirment). Les manchots Gentoo et Chinstrap ont en revanche des becs de longueur à peu près similaires, bien que ceux des Chinstrap soient peut-être très légèrement plus longs (Q1, médiane et Q3 supérieurs à ceux des Gentoo). On peut vérifier tout ça graphiquement avec des boîtes à moustaches :
 
 ```{r}
+#| warning: false
+
 penguins |> 
   ggplot(aes(x = species, y = bill_length_mm)) +
   geom_boxplot() +
@@ -570,6 +572,9 @@ penguins |>
 Ou avec un graphique de densité :
 
 ```{r}
+#| fig.asp: 1
+#| warning: false
+
 penguins |> 
   ggplot(aes(x = bill_length_mm, fill = species)) +
   geom_density(alpha = 0.5, show.legend = FALSE) +
@@ -595,7 +600,7 @@ Les fonctions `summarise()` et `reframe()`, avec leur argument `.by()` (ou la fo
 
 ### La fonction `summary()`
 
-La fonction `summary()` (à ne pas confondre avec `summarise()`) permet d'obtenir des résumés de données pour tous types d'objets dans `R`. Selon la classe des objets que l'on transmets à `summary()`, la nature des résultats obtenus changera. Nous verrons ainsi au semestre 6 que cette fonction peut être utilisée pour examiner les résultats de modèles de régressions linéaires ou d'analyses de variances. Pour l'instant, nous nous intéressons à 3 situations :
+La fonction `summary()` (à ne pas confondre avec `summarise()`) permet d'obtenir des résumés de données pour tous types d'objets dans `R`. Selon la classe des objets que l'on transmet à `summary()`, la nature des résultats obtenus changera. Nous verrons ainsi au semestre 6 que cette fonction peut être utilisée pour examiner les résultats de modèles de régressions linéaires ou d'analyses de variances. Pour l'instant, nous nous intéressons à 3 situations :
 
 - ce que renvoie la fonction quand on lui fournit un vecteur
 - ce que renvoie la fonction quand on lui fournit un facteur
@@ -630,7 +635,7 @@ Cette fonction fournit donc 2 indices de plus que la fonction `quantile()` (la m
 quantile(penguins$body_mass_g, na.rm = TRUE)
 ```
 
-Mais contrairement à ce que nous avons vu plus haut, la fonction `summary()` ne possède pas d'argument `.by()` et il n'est pas possible de l'utiliser avec la fonction `group_by()`. Par conséquent, il n'est pas possible de se servir de cette fonction pour avoir des valeurs pour chaque modalités d'un facteur (pour chaque espèce par exemple).
+Mais contrairement à ce que nous avons vu plus haut, la fonction `summary()` ne possède pas d'argument `.by()` et il n'est pas possible de l'utiliser avec la fonction `group_by()`. Par conséquent, il n'est pas possible de se servir de cette fonction pour avoir des valeurs pour chaque modalité d'un facteur (pour chaque espèce par exemple).
 
 Les différents indices statistiques fournis nous renseignent à la fois sur la position de la distribution et sur la dispersion des données. 
 

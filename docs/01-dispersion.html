@@ -324,7 +324,7 @@ Attention
 <li><code>select()</code> : pour sélectionner ou exclure certaines colonnes (variables) d’un tableau de données</li>
 <li><code>filter()</code> : pour trier des lignes d’un tableau de données selon des critères ou conditions choisis par l’utilisateur</li>
 <li><code>mutate()</code> : pour transformer des variables existantes, ou pour créer de nouvelles colonnes dans un tableau de données</li>
-<li><code>arrange()</code> : pour trier des tableaux de données par ordre croissants ou décroissants</li>
+<li><code>arrange()</code> : pour trier des tableaux de données par ordre croissant ou décroissant</li>
 </ul>
 <p>Si vous ne savez plus comment utiliser ces fonctions, relisez <a href="https://besibo.github.io/BiometrieS3/04-DataWrangling.html">le chapitre 4 du livre en ligne de Biométrie du semestre 3</a>.</p>
 <p>À ces 4 verbes, nous allons ici ajouter :</p>
@@ -450,7 +450,7 @@ Figure&nbsp;1.1: Schéma de la fonction <code>summarise()</code> tiré de la ‘
 1     201.      197      172      231    4202.     4050     2700     6300</code></pre>
 </div>
 </div>
-<p>La fonction <code>summarise()</code> est donc très utile pour produire des résumés informatifs des données, mais nos exemples ne sont ici pas très pertinents puisque nous avons jusqu’ici calculé des indices sans distinguer les espèces. Si les 3 espèces de manchots ont des caractéristiques très différentes, calculer des moyennes toutes espèces confondues n’a pas de sens. Voyons maintenant comment obtenir ces même indices pour chaque espèce.</p>
+<p>La fonction <code>summarise()</code> est donc très utile pour produire des résumés informatifs des données, mais nos exemples ne sont ici pas très pertinents puisque nous avons jusqu’ici calculé des indices sans distinguer les espèces. Si les trois espèces de manchots ont des caractéristiques très différentes, calculer des moyennes toutes espèces confondues n’a pas de sens. Voyons maintenant comment obtenir ces mêmes indices pour chaque espèce.</p>
 </section>
 <section id="intérêt-de-largument-.by" class="level3" data-number="1.2.2">
 <h3 data-number="1.2.2" class="anchored" data-anchor-id="intérêt-de-largument-.by"><span class="header-section-number">1.2.2</span> Intérêt de l’argument <code>.by</code></h3>
@@ -626,7 +626,7 @@ Figure&nbsp;1.2: Fonctionnement de l’argument <code>.by</code> travaillant de 
 3 Chinstrap  51.1   46.6</code></pre>
 </div>
 </div>
-<p>Sous cette forme, les données ne sont plus “rangées”, c’est à dire que nous n’avons plus une observation par ligne et une variable par colonne. En effet ici, la variable <code>sex</code> est maintenant “étalée” dans 2 colonnes distinctes : chaque modalité du facteur de départ (<code>female</code> et <code>male</code>) est utilisée en tant que titre de nouvelles colonnes, et la variable <code>moyenne</code> est répartie dans deux colonnes. Ce format de tableau n’est pas idéal pour les statistiques ou les représentations graphiques, mais il est plus synthétique, et donc plus facile à inclure dans un rapport ou un compte-rendu.</p>
+<p>Sous cette forme, les données ne sont plus “rangées”, c’est-à-dire que nous n’avons plus une observation par ligne et une variable par colonne. En effet, ici, la variable <code>sex</code> est maintenant “étalée” dans 2 colonnes distinctes : chaque modalité du facteur de départ (<code>female</code> et <code>male</code>) est utilisée en tant que titre de nouvelles colonnes, et la variable <code>moyenne</code> est répartie dans deux colonnes. Ce format de tableau n’est pas idéal pour les statistiques ou les représentations graphiques, mais il est plus synthétique, et donc plus facile à inclure dans un rapport ou un compte-rendu.</p>
 </section>
 <section id="sec-count" class="level3" data-number="1.2.4">
 <h3 data-number="1.2.4" class="anchored" data-anchor-id="sec-count"><span class="header-section-number">1.2.4</span> Un raccourci pratique pour compter des effectifs</h3>
@@ -706,7 +706,7 @@ Figure&nbsp;1.2: Fonctionnement de l’argument <code>.by</code> travaillant de 
 6 Gentoo    male      61</code></pre>
 </div>
 </div>
-<p>Et il est évidemment possible de présenter le résultats sous un format de tableau large :</p>
+<p>Et il est évidemment possible de présenter les résultats sous un format de tableau large :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span> </span>
@@ -722,7 +722,7 @@ Figure&nbsp;1.2: Fonctionnement de l’argument <code>.by</code> travaillant de 
 3 Gentoo        58    61</code></pre>
 </div>
 </div>
-<p>Vous connaissez maintenant plusieurs méthodes pour calculer à la main des statistiques descriptives pour des variables entières, ou pour des sous-groupes de lignes (par espèce, par sexe, par sexe et par espèce…). Globalement, toutes les fonctions de R qui prennent une série de chiffres en guise d’argument, et qui renvoient une valeur unique, peuvent être utilisées avec la fonction <code>summarise()</code>. En particulier, vous pouvez utiliser les fonctions suivantes pour faire des analyses exploratoires :</p>
+<p>Vous connaissez maintenant plusieurs méthodes pour calculer à la main des statistiques descriptives pour des variables entières, ou pour des sous-groupes de lignes (par espèce, par sexe, par espèce et sexe…). Globalement, toutes les fonctions de R qui prennent une série de chiffres en guise d’argument, et qui renvoient une valeur unique, peuvent être utilisées avec la fonction <code>summarise()</code>. En particulier, vous pouvez utiliser les fonctions suivantes pour faire des analyses exploratoires :</p>
 <ul>
 <li><code>mean()</code> : calcul de la moyenne</li>
 <li><code>median()</code> : calcul de la médiane</li>
@@ -734,7 +734,7 @@ Figure&nbsp;1.2: Fonctionnement de l’argument <code>.by</code> travaillant de 
 <li><code>sd()</code> : calcul de l’écart-type</li>
 <li><code>IQR()</code> : calcul de l’intervalle inter-quartiles</li>
 </ul>
-<p>Et la liste n’est bien sûr pas exhaustive</p>
+<p>Et la liste n’est bien sûr pas exhaustive.</p>
 </section>
 <section id="sec-exo10" class="level3" data-number="1.2.5">
 <h3 data-number="1.2.5" class="anchored" data-anchor-id="sec-exo10"><span class="header-section-number">1.2.5</span> Exercices</h3>
@@ -877,7 +877,7 @@ Figure&nbsp;1.2: Fonctionnement de l’argument <code>.by</code> travaillant de 
 3 Gentoo        58    61</code></pre>
 </div>
 </div>
-<p>L’argument <code>names_from</code> permet d’indiquer dans quelle colonne du tableau de départ aller cherche les noms de colonnes pour le nouveau tableau. Ici, on va chercher dans la colonne <code>sex</code> les noms de colonne du futur tableau (<code>female</code> et <code>male</code>). L’argument <code>values_from</code> permet d’indiquer dans quelle colonne du tableau de départ on souhaite aller chercher les valeurs que l’on souhaite mettre dans les nouvelles colonnes du futur tableau (ici, les effectifs stockés dans la colonne <code>n</code>).</p>
+<p>L’argument <code>names_from</code> permet d’indiquer dans quelle colonne du tableau de départ aller cherche les <strong>noms de colonnes</strong> pour le nouveau tableau. Ici, on va chercher dans la colonne <code>sex</code> les noms des colonnes du futur tableau (<code>female</code> et <code>male</code>). L’argument <code>values_from</code> permet d’indiquer dans quelle colonne du tableau de départ on souhaite aller chercher <strong>les valeurs</strong> que l’on souhaite mettre dans les nouvelles colonnes du futur tableau (ici, les effectifs stockés dans la colonne <code>n</code>).</p>
 <p>Le terme “tableau large” peut-être trompeur car le tableau obtenu n’a pas forcément plus de colonnes que le tableau d’origine. En tous cas, il a toujours moins de lignes que le tableau de départ. Ici, <code>resum</code> avait 6 lignes et 3 colonnes, <code>resum_large1</code> possède 3 lignes et 3 colonnes.</p>
 <p>Si on souhaite avoir les espèces en colonnes et les sexes en lignes, on peut taper ceci :</p>
 <div class="cell">
@@ -898,7 +898,7 @@ Figure&nbsp;1.2: Fonctionnement de l’argument <code>.by</code> travaillant de 
 </section>
 <section id="du-format-large-au-format-long-pivot_longer" class="level3" data-number="1.3.2">
 <h3 data-number="1.3.2" class="anchored" data-anchor-id="du-format-large-au-format-long-pivot_longer"><span class="header-section-number">1.3.2</span> Du format large au format long : <code>pivot_longer()</code></h3>
-<p>À l’inverse, on dispose parfois de données au format large alors que la plupart des fonctions graphiques et statistiques de <code>R</code> requièrent des données au format long, c’est à dire, des tableaux dans lesquels il y a une correspondance stricte entre colonnes et variables : une variable est contenue dans une seule colonne d’un tableau, et chaque ligne correspond à une unique observation. AInsi, le tableau <code>resum_large2</code> n’est pas au format long :</p>
+<p>À l’inverse, on dispose parfois de données au format large alors que la plupart des fonctions graphiques et statistiques de <code>R</code> requièrent des données au format long, c’est-à-dire, des tableaux dans lesquels il y a une correspondance stricte entre colonnes et variables : une variable est contenue dans une seule colonne d’un tableau, et chaque ligne correspond à une unique observation. Ainsi, le tableau <code>resum_large2</code> n’est pas au format long :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>resum_large2</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1124,10 +1124,6 @@ dplyr 1.1.0.
 <span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Espèce"</span>, <span class="at">y =</span> <span class="st">"Longueur du bec (mm)"</span>) <span class="sc">+</span></span>
 <span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 2 rows containing non-finite outside the scale range
-(`stat_boxplot()`).</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1138,22 +1134,14 @@ dplyr 1.1.0.
 </div>
 <p>Ou avec un graphique de densité :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
-<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
-<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rug</span>() <span class="sc">+</span></span>
-<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Longueur du bec (mm)"</span>, <span class="at">y =</span> <span class="st">"Densité"</span>) <span class="sc">+</span></span>
-<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb78-7"><a href="#cb78-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>) <span class="sc">+</span></span>
-<span id="cb78-8"><a href="#cb78-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 2 rows containing non-finite outside the scale range
-(`stat_density()`).</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
-(`geom_rug()`).</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rug</span>() <span class="sc">+</span></span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Longueur du bec (mm)"</span>, <span class="at">y =</span> <span class="st">"Densité"</span>) <span class="sc">+</span></span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb77-7"><a href="#cb77-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>) <span class="sc">+</span></span>
+<span id="cb77-8"><a href="#cb77-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1185,7 +1173,7 @@ dplyr 1.1.0.
 <p>Les fonctions <code>summarise()</code> et <code>reframe()</code>, avec leur argument <code>.by()</code> (ou la fonction <code>group_by()</code>) permettent donc de calculer n’importe quel indice de statistique descriptive sur un tableau de données entier ou sur des modalités ou combinaisons de modalités de facteurs. Il existe par ailleurs de nombreuses fonctions, disponibles de base dans <code>R</code> ou dans certains packages spécifiques, qui permettent de fournir des résumés plus ou moins automatiques de tout ou partie des variables d’un jeu de données. Nous allons en décrire 2 ici, mais il en existe beaucoup d’autres : à vous d’explorer les possibilités et d’utiliser les fonctions qui vous paraissent les plus pertinentes, les plus simples à utiliser, les plus visuelles ou les plus complètes.</p>
 <section id="la-fonction-summary" class="level3" data-number="1.5.1">
 <h3 data-number="1.5.1" class="anchored" data-anchor-id="la-fonction-summary"><span class="header-section-number">1.5.1</span> La fonction <code>summary()</code></h3>
-<p>La fonction <code>summary()</code> (à ne pas confondre avec <code>summarise()</code>) permet d’obtenir des résumés de données pour tous types d’objets dans <code>R</code>. Selon la classe des objets que l’on transmets à <code>summary()</code>, la nature des résultats obtenus changera. Nous verrons ainsi au semestre 6 que cette fonction peut être utilisée pour examiner les résultats de modèles de régressions linéaires ou d’analyses de variances. Pour l’instant, nous nous intéressons à 3 situations :</p>
+<p>La fonction <code>summary()</code> (à ne pas confondre avec <code>summarise()</code>) permet d’obtenir des résumés de données pour tous types d’objets dans <code>R</code>. Selon la classe des objets que l’on transmet à <code>summary()</code>, la nature des résultats obtenus changera. Nous verrons ainsi au semestre 6 que cette fonction peut être utilisée pour examiner les résultats de modèles de régressions linéaires ou d’analyses de variances. Pour l’instant, nous nous intéressons à 3 situations :</p>
 <ul>
 <li>ce que renvoie la fonction quand on lui fournit un vecteur</li>
 <li>ce que renvoie la fonction quand on lui fournit un facteur</li>
@@ -1195,7 +1183,7 @@ dplyr 1.1.0.
 <h4 data-number="1.5.1.1" class="anchored" data-anchor-id="variable-continue-vecteur-numérique"><span class="header-section-number">1.5.1.1</span> Variable continue : vecteur numérique</h4>
 <p>Commençons par fournir un vecteur numérique à la fonction <code>summary()</code>. Nous allons pour cela extraire les données de masses corporelles des manchots du tableau <code>penguins</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>penguins<span class="sc">$</span>body_mass_g</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>penguins<span class="sc">$</span>body_mass_g</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1] 3750 3800 3250   NA 3450 3650 3625 4675 3475 4250 3300 3700 3200 3800 4400
  [16] 3700 3450 4500 3325 4200 3400 3600 3800 3950 3800 3800 3550 3200 3150 3950
@@ -1224,7 +1212,7 @@ dplyr 1.1.0.
 </div>
 <p>Nous avons donc 344 valeurs de masses en grammes qui correspondent aux 344 manchots du jeu de données. La fonction <code>summary()</code> renvoie le résumé suivant lorsqu’on lui fournit ces valeurs :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(penguins<span class="sc">$</span>body_mass_g)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(penguins<span class="sc">$</span>body_mass_g)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
    2700    3550    4050    4202    4750    6300       2 </code></pre>
@@ -1242,13 +1230,13 @@ dplyr 1.1.0.
 </ul>
 <p>Cette fonction fournit donc 2 indices de plus que la fonction <code>quantile()</code> (la moyenne et le nombre de valeurs manquantes) :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  0%  25%  50%  75% 100% 
 2700 3550 4050 4750 6300 </code></pre>
 </div>
 </div>
-<p>Mais contrairement à ce que nous avons vu plus haut, la fonction <code>summary()</code> ne possède pas d’argument <code>.by()</code> et il n’est pas possible de l’utiliser avec la fonction <code>group_by()</code>. Par conséquent, il n’est pas possible de se servir de cette fonction pour avoir des valeurs pour chaque modalités d’un facteur (pour chaque espèce par exemple).</p>
+<p>Mais contrairement à ce que nous avons vu plus haut, la fonction <code>summary()</code> ne possède pas d’argument <code>.by()</code> et il n’est pas possible de l’utiliser avec la fonction <code>group_by()</code>. Par conséquent, il n’est pas possible de se servir de cette fonction pour avoir des valeurs pour chaque modalité d’un facteur (pour chaque espèce par exemple).</p>
 <p>Les différents indices statistiques fournis nous renseignent à la fois sur la position de la distribution et sur la dispersion des données.</p>
 <ul>
 <li>La <em>position</em> correspond à la tendance centrale et indique quelles sont les valeurs qui caractérisent le plus grand nombre d’individus. La moyenne et la médiane sont les deux indices de position les plus fréquemment utilisés. Lorsqu’une variable a une distribution parfaitement symétrique, la moyenne et la médiane sont strictement égales. Mais lorsqu’une distribution est asymétrique, la moyenne et la médiane diffèrent. En particulier, la moyenne est beaucoup plus sensible aux valeurs extrêmes que la médiane. Cela signifie que quand une distribution est très asymétrique, la médiane est souvent une meilleure indication des valeurs les plus fréquemment observées.</li>
@@ -1288,15 +1276,15 @@ Figure&nbsp;1.4: Distribution des masses corporelles (données fictives)
 </div>
 <p>On comprend donc l’importance de considérer les indices de dispersion en plus des indices de position pour caractériser et comprendre une série de données numériques. L’intervalle interquartile est toujours utile pour connaître l’étendue des données qui correspondent aux 50% des observations les plus centrales. Les autres indices de dispersion très fréquemment utilisés, mais qui ne sont pas proposés par défaut par la fonction <code>summary()</code>, sont la variance et l’écart-type. Il est possible de calculer tous les indices renvoyés par la fonction <code>summary()</code> et ceux qui nous manquent grâce à la fonction <code>summarise()</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
-<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">min =</span> <span class="fu">min</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">Q1 =</span> <span class="fu">quantile</span>(body_mass_g, <span class="fl">0.25</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">med =</span> <span class="fu">median</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">moy =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb87-6"><a href="#cb87-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">Q3 =</span> <span class="fu">quantile</span>(body_mass_g, <span class="fl">0.75</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb87-7"><a href="#cb87-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">max =</span> <span class="fu">max</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb87-8"><a href="#cb87-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">var =</span> <span class="fu">var</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb87-9"><a href="#cb87-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">et =</span> <span class="fu">sd</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">min =</span> <span class="fu">min</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">Q1 =</span> <span class="fu">quantile</span>(body_mass_g, <span class="fl">0.25</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">med =</span> <span class="fu">median</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">moy =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">Q3 =</span> <span class="fu">quantile</span>(body_mass_g, <span class="fl">0.75</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb84-7"><a href="#cb84-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">max =</span> <span class="fu">max</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb84-8"><a href="#cb84-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">var =</span> <span class="fu">var</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb84-9"><a href="#cb84-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">et =</span> <span class="fu">sd</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 8
     min    Q1   med   moy    Q3   max     var    et
@@ -1315,7 +1303,7 @@ Figure&nbsp;1.4: Distribution des masses corporelles (données fictives)
 </ul>
 <p>Pour toutes ces fonctions l’argument <code>na.rm = TRUE</code> permet d’obtenir les résultats même si certaines valeurs sont manquantes. Enfin, la fonction <code>IQR()</code> permet de calculer l’intervalle inter-quartiles :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">IQR</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">IQR</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1200</code></pre>
 </div>
@@ -1326,7 +1314,7 @@ Figure&nbsp;1.4: Distribution des masses corporelles (données fictives)
 <h4 data-number="1.5.1.2" class="anchored" data-anchor-id="variable-quantitative-facteur"><span class="header-section-number">1.5.1.2</span> Variable quantitative : facteur</h4>
 <p>Si l’on fournit une variable catégorielle ou facteur à <code>summary()</code>, le résultat obtenu sera naturellement différent : calculer des moyennes, médianes ou quartiles n’aurait en effet pas de sens lorsque la variable fournie ne contient que des catégories :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(penguins<span class="sc">$</span>species)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(penguins<span class="sc">$</span>species)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Adelie Chinstrap    Gentoo 
       152        68       124 </code></pre>
@@ -1335,7 +1323,7 @@ Figure&nbsp;1.4: Distribution des masses corporelles (données fictives)
 <p>Pour les facteurs, <code>summary()</code> compte simplement le nombre d’observations pour chaque modalité. Ici, la variable <code>species</code> est un facteur qui compte 3 modalités. La fonction <code>summary()</code> nous indique donc le nombre d’individus pour chaque modalité : notre jeu de données se compose de 152 individus de l’espèce Adélie, 68 individus de l’espèce Chinstrap, et 124 individus de l’espèce Gentoo.</p>
 <p>Comme pour les vecteurs numériques, si le facteur présente des données manquantes, la fonction <code>summary()</code> compte également leur nombre :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(penguins<span class="sc">$</span>sex)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(penguins<span class="sc">$</span>sex)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>female   male   NA's 
    165    168     11 </code></pre>
@@ -1343,8 +1331,8 @@ Figure&nbsp;1.4: Distribution des masses corporelles (données fictives)
 </div>
 <p>Pour les facteurs, la fonction <code>summary()</code> est donc tout à fait équivalente à la fonction <code>count()</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
-<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(species)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(species)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   species       n
@@ -1360,7 +1348,7 @@ Figure&nbsp;1.4: Distribution des masses corporelles (données fictives)
 <h4 data-number="1.5.1.3" class="anchored" data-anchor-id="les-tableaux-data.frame-ou-tibble"><span class="header-section-number">1.5.1.3</span> Les tableaux : <code>data.frame</code> ou <code>tibble</code></h4>
 <p>L’avantage de la fonction <code>summary()</code> par rapport à la fonction <code>count()</code> apparaît lorsque l’on souhaite obtenir des informations sur toutes les variables d’un tableau à la fois :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(penguins)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(penguins)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      species          island    bill_length_mm  bill_depth_mm  
  Adelie   :152   Biscoe   :168   Min.   :32.10   Min.   :13.10  
@@ -1383,9 +1371,9 @@ Figure&nbsp;1.4: Distribution des masses corporelles (données fictives)
 <p>Ici, on obtient un résumé pour chaque colonne du tableau. Les colonnes numériques sont traitées comme les vecteurs numériques (on obtient alors les minimas et maximas, les quartiles, les moyennes et médianes) et les colonnes contenant des variables catégorielles sont traitées comme des facteurs (et on obtient alors le nombre d’observations pour chaque modalité).</p>
 <p>On constate au passage que la variable <code>year</code> est considérée ici comme une variable numérique, alors qu’elle devrait plutôt être considérée comme un facteur, ce qui nous permettrait de savoir combien d’individus ont été échantillonnés chaque année :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
-<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">factor</span>(year)) <span class="sc">|&gt;</span> </span>
-<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">factor</span>(year)) <span class="sc">|&gt;</span> </span>
+<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      species          island    bill_length_mm  bill_depth_mm  
  Adelie   :152   Biscoe   :168   Min.   :32.10   Min.   :13.10  
@@ -1415,7 +1403,7 @@ Figure&nbsp;1.4: Distribution des masses corporelles (données fictives)
 <h4 data-number="1.5.2.1" class="anchored" data-anchor-id="tableau-non-groupé"><span class="header-section-number">1.5.2.1</span> Tableau non groupé</h4>
 <p>Commençons par examiner le résultat avec le tableau <code>penguins</code> non groupé :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(penguins)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(penguins)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>Data summary</caption>
@@ -1633,12 +1621,12 @@ Figure&nbsp;1.4: Distribution des masses corporelles (données fictives)
 <h4 data-number="1.5.2.2" class="anchored" data-anchor-id="tableau-groupé"><span class="header-section-number">1.5.2.2</span> Tableau groupé</h4>
 <p>La fonction <code>skim()</code>, déjà très pratique, le devient encore plus lorsque l’on choisit de lui fournir seulement certaines variables, et qu’on fait certains regroupements. Par exemple, on peut sélectionner les variables relatives aux dimensions du bec (<code>bill_length_mm</code> et <code>bill_depth_mm</code>) avec la fonction <code>select()</code> que nous connaissons déjà, et demander un résumé des données pour chaque espèce grâce à la fonction <code>group_by()</code> que nous connaissons également :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span>                     <span class="co"># Avec le tableau penguins...</span></span>
-<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species, </span>
-<span id="cb102-3"><a href="#cb102-3" aria-hidden="true" tabindex="-1"></a>         bill_length_mm,</span>
-<span id="cb102-4"><a href="#cb102-4" aria-hidden="true" tabindex="-1"></a>         bill_depth_mm) <span class="sc">|&gt;</span>      <span class="co"># Je sélectionne les variables d'intérêt...</span></span>
-<span id="cb102-5"><a href="#cb102-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span>          <span class="co"># Je regroupe par espèce...</span></span>
-<span id="cb102-6"><a href="#cb102-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>()                         <span class="co"># Et je produis un résumé des données</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span>                     <span class="co"># Avec le tableau penguins...</span></span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species, </span>
+<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>         bill_length_mm,</span>
+<span id="cb99-4"><a href="#cb99-4" aria-hidden="true" tabindex="-1"></a>         bill_depth_mm) <span class="sc">|&gt;</span>      <span class="co"># Je sélectionne les variables d'intérêt...</span></span>
+<span id="cb99-5"><a href="#cb99-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span>          <span class="co"># Je regroupe par espèce...</span></span>
+<span id="cb99-6"><a href="#cb99-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>()                         <span class="co"># Et je produis un résumé des données</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>Data summary</caption>
