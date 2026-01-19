@@ -29,11 +29,11 @@ library(nycflights13)
 
 Les packages du `tidyverse` [@R-tidyverse] permettent de manipuler facilement des tableaux de données et de réaliser des graphiques. Charger le `tidyverse` permet d'accéder, entre autres, aux packages `readr` [@R-readr], pour importer facilement des fichiers `.csv` au format `tibble`, `dplyr` [@R-dplyr] pour manipuler des tableaux de données ou encore `ggplot2` [@R-ggplot2] pour produire des graphiques. Le package `skimr` [@R-skimr] permet de calculer des résumés de données très informatifs. Les packages `palmerpenguins` [@R-palmerpenguins] et `nycflights13` [@R-nycflights13] fournissent des jeux de données qui seront faciles à manipuler pour illustrer ce chapitre (et les suivants).
 
-:::{.callout-warning}
+<!-- :::{.callout-warning}
 ## Important 
 
 Même si vous avez déjà installé le `tidyverse` ou `dplyr` au semestre précédent, ré-installez `dplyr` avec `install.packages("dplyr")`. Ce package a en effet été mis à jour tout récemment, et nous aurons besoin de sa toute dernière version (v1.1.0). Chargez-le ensuite en mémoire avec `library(dplyr)`.
-:::  
+:::   -->
 
 :::{.callout-important}
 ## Attention
@@ -154,7 +154,7 @@ La fonction `summarise()` est donc très utile pour produire des résumés infor
 
 La fonction `summarise()` devient particulièrement puissante lorsqu'on y ajoute l'argument `.by` :
 
-```{r, groupby, echo = FALSE, out.width='65%', fig.align='center', fig.cap="(ref:groupby)"}
+```{r}
 #| echo: false
 #| out-width: 65%
 #| fig-align: center
